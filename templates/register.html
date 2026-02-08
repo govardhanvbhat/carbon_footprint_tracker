@@ -1,0 +1,777 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Register | Carbon Tracker</title>
+  
+  <!-- Bootstrap -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+  <!-- Google Font -->
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+  <style>
+    :root {
+      --primary: #2ecc71;
+      --primary-dark: #27ae60;
+      --secondary: #3498db;
+      --dark: #2c3e50;
+      --light: #ecf0f1;
+      --white: #ffffff;
+      --shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+      --transition: all 0.3s ease;
+    }
+
+    body {
+      margin: 0;
+      font-family: 'Poppins', sans-serif;
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      background: linear-gradient(135deg, #1a3c27, #2c5e3b, #3a7d54);
+      background-size: 400% 400%;
+      animation: gradientShift 15s ease infinite;
+      position: relative;
+      overflow: hidden;
+    }
+
+    /* Nature Background Elements */
+    .nature-background {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: 0;
+    }
+
+    .tree {
+      position: absolute;
+      bottom: 0;
+      width: 150px;
+      height: 200px;
+    }
+
+    .tree-left {
+      left: 5%;
+    }
+
+    .tree-right {
+      right: 5%;
+    }
+
+    .tree-trunk {
+      position: absolute;
+      bottom: 0;
+      width: 20px;
+      height: 80px;
+      background: #8B4513;
+      left: 50%;
+      transform: translateX(-50%);
+    }
+
+    .tree-top {
+      position: absolute;
+      bottom: 70px;
+      width: 120px;
+      height: 130px;
+      background: #2ecc71;
+      border-radius: 50% 50% 40% 40%;
+      left: 50%;
+      transform: translateX(-50%);
+      box-shadow: inset 0 -10px 20px rgba(0,0,0,0.1);
+    }
+
+    .floating-leaf {
+      position: absolute;
+      width: 25px;
+      height: 25px;
+      background: var(--primary);
+      border-radius: 50% 0 50% 50%;
+      animation: floatLeaf 8s infinite linear;
+      opacity: 0.7;
+    }
+
+    .leaf-1 {
+      top: 15%;
+      left: 20%;
+      animation-delay: 0s;
+    }
+
+    .leaf-2 {
+      top: 25%;
+      right: 25%;
+      animation-delay: 2s;
+    }
+
+    .leaf-3 {
+      top: 40%;
+      left: 15%;
+      animation-delay: 4s;
+    }
+
+    .leaf-4 {
+      top: 60%;
+      right: 20%;
+      animation-delay: 6s;
+    }
+
+    .eco-badge {
+      position: absolute;
+      top: 10%;
+      left: 50%;
+      transform: translateX(-50%);
+      background: rgba(255, 255, 255, 0.2);
+      backdrop-filter: blur(10px);
+      padding: 15px 25px;
+      border-radius: 50px;
+      color: white;
+      font-weight: 600;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      animation: pulse 3s infinite;
+    }
+
+    .earth-icon {
+      position: absolute;
+      bottom: 10%;
+      right: 8%;
+      width: 80px;
+      height: 80px;
+      background: linear-gradient(135deg, #3498db, #2ecc71);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      font-size: 30px;
+      animation: rotate 20s infinite linear;
+      box-shadow: 0 0 30px rgba(46, 204, 113, 0.5);
+    }
+
+    .stats-bubble {
+      position: absolute;
+      background: rgba(255, 255, 255, 0.15);
+      backdrop-filter: blur(5px);
+      padding: 15px;
+      border-radius: 15px;
+      color: white;
+      font-size: 14px;
+      text-align: center;
+      animation: floatUp 6s infinite ease-in-out;
+    }
+
+    .stats-1 {
+      top: 20%;
+      left: 8%;
+      animation-delay: 0s;
+    }
+
+    .stats-2 {
+      top: 70%;
+      left: 12%;
+      animation-delay: 2s;
+    }
+
+    .stats-3 {
+      top: 30%;
+      right: 10%;
+      animation-delay: 4s;
+    }
+
+    .register-container {
+      display: flex;
+      width: 1000px;
+      height: 700px;
+      background: rgba(255, 255, 255, 0.95);
+      backdrop-filter: blur(10px);
+      border-radius: 24px;
+      box-shadow: var(--shadow);
+      overflow: hidden;
+      position: relative;
+      z-index: 2;
+      animation: slideUp 1s ease;
+      border: 1px solid rgba(255, 255, 255, 0.2);
+    }
+
+    .register-visual {
+      flex: 1;
+      background: linear-gradient(135deg, var(--primary), var(--secondary));
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      padding: 40px;
+      color: white;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .register-visual::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" preserveAspectRatio="none"><path d="M0,0 L100,0 L100,100 Z" fill="rgba(255,255,255,0.1)"/></svg>');
+      background-size: cover;
+    }
+
+    .visual-icon {
+      font-size: 80px;
+      margin-bottom: 20px;
+      animation: pulse 2s infinite;
+    }
+
+    .visual-title {
+      font-size: 32px;
+      font-weight: 700;
+      margin-bottom: 15px;
+      text-align: center;
+    }
+
+    .visual-text {
+      font-size: 16px;
+      text-align: center;
+      max-width: 80%;
+      line-height: 1.6;
+      opacity: 0.9;
+    }
+
+    .feature-list {
+      margin-top: 30px;
+      list-style: none;
+      padding: 0;
+    }
+
+    .feature-list li {
+      margin-bottom: 12px;
+      display: flex;
+      align-items: center;
+    }
+
+    .feature-list i {
+      margin-right: 10px;
+      font-size: 18px;
+    }
+
+    .register-form {
+      flex: 1.2;
+      padding: 40px;
+      display: flex;
+      flex-direction: column;
+      overflow-y: auto;
+    }
+
+    .form-header {
+      text-align: center;
+      margin-bottom: 25px;
+    }
+
+    .form-icon {
+      font-size: 40px;
+      color: var(--primary);
+      margin-bottom: 15px;
+    }
+
+    h2 {
+      font-weight: 700;
+      color: var(--dark);
+      margin-bottom: 10px;
+    }
+
+    .form-subtitle {
+      color: #666;
+      font-size: 14px;
+    }
+
+    .form-group {
+      position: relative;
+      margin-bottom: 20px;
+    }
+
+    .form-control, .form-select {
+      border-radius: 50px;
+      padding: 14px 20px 14px 45px;
+      border: 2px solid #e0e0e0;
+      font-size: 15px;
+      transition: var(--transition);
+    }
+
+    .form-control:focus, .form-select:focus {
+      border-color: var(--primary);
+      box-shadow: 0 0 0 0.2rem rgba(46, 204, 113, 0.25);
+    }
+
+    .input-icon {
+      position: absolute;
+      left: 18px;
+      top: 50%;
+      transform: translateY(-50%);
+      color: #95a5a6;
+      font-size: 18px;
+    }
+
+    .select-icon {
+      position: absolute;
+      right: 18px;
+      top: 50%;
+      transform: translateY(-50%);
+      color: #95a5a6;
+      font-size: 14px;
+    }
+
+    .btn-register {
+      background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+      border: none;
+      border-radius: 50px;
+      padding: 14px;
+      font-size: 16px;
+      font-weight: 600;
+      color: white;
+      transition: var(--transition);
+      position: relative;
+      overflow: hidden;
+      margin-top: 10px;
+    }
+
+    .btn-register::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+      transition: left 0.7s;
+    }
+
+    .btn-register:hover::before {
+      left: 100%;
+    }
+
+    .btn-register:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 7px 15px rgba(46, 204, 113, 0.4);
+    }
+
+    .form-footer {
+      text-align: center;
+      margin-top: 20px;
+    }
+
+    .form-footer a {
+      text-decoration: none;
+      color: var(--primary);
+      font-weight: 600;
+      transition: var(--transition);
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+    }
+
+    .form-footer a:hover {
+      color: var(--primary-dark);
+      transform: translateX(5px);
+    }
+
+    .progress-container {
+      margin-bottom: 25px;
+    }
+
+    .progress-label {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 8px;
+      font-size: 14px;
+      color: #666;
+    }
+
+    .progress {
+      height: 8px;
+      border-radius: 10px;
+      background: #e0e0e0;
+    }
+
+    .progress-bar {
+      background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+      border-radius: 10px;
+      transition: width 0.5s ease;
+    }
+
+    /* Animations */
+    @keyframes fadeIn {
+      from { opacity: 0; } to { opacity: 1; }
+    }
+
+    @keyframes slideUp {
+      from { transform: translateY(40px); opacity: 0; }
+      to { transform: translateY(0); opacity: 1; }
+    }
+
+    @keyframes gradientShift {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
+
+    @keyframes floatLeaf {
+      0% { transform: translateY(0) rotate(0deg); }
+      50% { transform: translateY(-20px) rotate(180deg); }
+      100% { transform: translateY(0) rotate(360deg); }
+    }
+
+    @keyframes floatUp {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-10px); }
+    }
+
+    @keyframes pulse {
+      0% { transform: translateX(-50%) scale(1); }
+      50% { transform: translateX(-50%) scale(1.05); }
+      100% { transform: translateX(-50%) scale(1); }
+    }
+
+    @keyframes rotate {
+      from { transform: rotate(0deg); }
+      to { transform: rotate(360deg); }
+    }
+
+    /* Flash messages styling */
+    .alert {
+      border-radius: 12px;
+      border: none;
+      padding: 12px 15px;
+      margin-bottom: 20px;
+      animation: slideIn 0.5s ease;
+    }
+
+    @keyframes slideIn {
+      from { transform: translateX(-20px); opacity: 0; }
+      to { transform: translateX(0); opacity: 1; }
+    }
+
+    /* Responsive adjustments */
+    @media (max-width: 1100px) {
+      .register-container {
+        width: 95%;
+        height: auto;
+        max-height: 90vh;
+      }
+    }
+
+    @media (max-width: 992px) {
+      .register-container {
+        flex-direction: column;
+        width: 90%;
+        height: auto;
+        max-width: 600px;
+      }
+      
+      .register-visual {
+        padding: 30px;
+      }
+      
+      .visual-icon {
+        font-size: 60px;
+      }
+      
+      .visual-title {
+        font-size: 24px;
+      }
+      
+      .tree, .stats-bubble, .earth-icon {
+        display: none;
+      }
+      
+      .register-form {
+        padding: 30px;
+      }
+    }
+
+    @media (max-width: 576px) {
+      .register-form {
+        padding: 20px;
+      }
+      
+      .form-control, .form-select {
+        padding: 12px 15px 12px 40px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <!-- Nature Background Elements -->
+  <div class="nature-background">
+    <!-- Trees -->
+    <div class="tree tree-left">
+      <div class="tree-trunk"></div>
+      <div class="tree-top"></div>
+    </div>
+    <div class="tree tree-right">
+      <div class="tree-trunk"></div>
+      <div class="tree-top"></div>
+    </div>
+    
+    <!-- Floating Leaves -->
+    <div class="floating-leaf leaf-1"></div>
+    <div class="floating-leaf leaf-2"></div>
+    <div class="floating-leaf leaf-3"></div>
+    <div class="floating-leaf leaf-4"></div>
+    
+    <!-- Eco Badge -->
+    <div class="eco-badge">
+      <i class="fas fa-leaf"></i>
+      Join 50,000+ Eco Warriors
+    </div>
+    
+    <!-- Stats Bubbles -->
+    <div class="stats-bubble stats-1">
+      <i class="fas fa-chart-line"></i><br>
+      15% Avg.<br>Reduction
+    </div>
+    <div class="stats-bubble stats-2">
+      <i class="fas fa-tree"></i><br>
+      2M+ Trees<br>Saved
+    </div>
+    <div class="stats-bubble stats-3">
+      <i class="fas fa-trophy"></i><br>
+      500K+<br>Achievements
+    </div>
+    
+    <!-- Rotating Earth -->
+    <div class="earth-icon">
+      <i class="fas fa-globe-americas"></i>
+    </div>
+  </div>
+
+  <div class="register-container">
+    <!-- Visual Section -->
+    <div class="register-visual">
+      <div class="visual-icon">🌱</div>
+      <h2 class="visual-title">Join the Eco Revolution!</h2>
+      <p class="visual-text">Start your journey to a sustainable lifestyle and track your carbon footprint with our AI-powered platform.</p>
+      
+      <ul class="feature-list">
+        <li><i class="fas fa-check-circle"></i> Personalized carbon insights</li>
+        <li><i class="fas fa-check-circle"></i> AI-powered recommendations</li>
+        <li><i class="fas fa-check-circle"></i> Eco challenges & achievements</li>
+        <li><i class="fas fa-check-circle"></i> Progress tracking & analytics</li>
+        <li><i class="fas fa-check-circle"></i> Community of eco-warriors</li>
+      </ul>
+    </div>
+
+    <!-- Register Form Section -->
+    <div class="register-form">
+      <div class="form-header">
+        <div class="form-icon"><i class="fas fa-user-plus"></i></div>
+        <h2>Create Your Account</h2>
+        <p class="form-subtitle">Fill in your details to start your eco-journey</p>
+      </div>
+
+      <!-- Progress Bar -->
+      <div class="progress-container">
+        <div class="progress-label">
+          <span>Profile Completion</span>
+          <span id="progress-percentage">0%</span>
+        </div>
+        <div class="progress">
+          <div class="progress-bar" id="form-progress" style="width: 0%"></div>
+        </div>
+      </div>
+
+      <!-- Flash messages -->
+      {% with messages = get_flashed_messages(with_categories=true) %}
+      {% if messages %}
+        {% for category, msg in messages %}
+          <div class="alert alert-{{ category }}">{{ msg }}</div>
+        {% endfor %}
+      {% endif %}
+      {% endwith %}
+
+      <form method="POST" id="registerForm">
+        <!-- Basic Information -->
+        <div class="form-group">
+          <i class="fas fa-user input-icon"></i>
+          <input type="text" name="name" class="form-control" placeholder="Full Name" required>
+        </div>
+
+        <div class="form-group">
+          <i class="fas fa-envelope input-icon"></i>
+          <input type="email" name="email" class="form-control" placeholder="Email Address" required>
+        </div>
+
+        <div class="form-group">
+          <i class="fas fa-lock input-icon"></i>
+          <input type="password" name="password" class="form-control" placeholder="Password" required>
+          <i class="fas fa-eye select-icon" id="password-toggle" style="cursor: pointer;"></i>
+        </div>
+
+        <div class="row">
+          <div class="col-md-6">
+            <div class="form-group">
+              <i class="fas fa-birthday-cake input-icon"></i>
+              <input type="number" name="age" class="form-control" placeholder="Age" min="10" max="100" required>
+            </div>
+          </div>
+          <div class="col-md-6">
+            <div class="form-group">
+              <i class="fas fa-venus-mars input-icon"></i>
+              <select name="gender" class="form-select" required>
+                <option value="">Select Gender</option>
+                <option>Male</option>
+                <option>Female</option>
+                <option>Other</option>
+                <option>Prefer not to say</option>
+              </select>
+              <i class="fas fa-chevron-down select-icon"></i>
+            </div>
+          </div>
+        </div>
+
+        <!-- Location -->
+        <div class="form-group">
+          <i class="fas fa-globe-americas input-icon"></i>
+          <input type="text" name="country" class="form-control" placeholder="Country / Region" required>
+        </div>
+
+        <!-- Lifestyle Information -->
+        <div class="row">
+          <div class="col-md-6">
+            <div class="form-group">
+              <i class="fas fa-home input-icon"></i>
+              <input type="number" name="household_size" class="form-control" placeholder="Household Size" min="1" required>
+            </div>
+          </div>
+          <div class="col-md-6">
+            <div class="form-group">
+              <i class="fas fa-car input-icon"></i>
+              <select name="transport_mode" class="form-select" required>
+                <option value="">Primary Transport</option>
+                <option>Car</option>
+                <option>Bike</option>
+                <option>Bus</option>
+                <option>Train</option>
+                <option>Walk</option>
+                <option>Electric Vehicle</option>
+              </select>
+              <i class="fas fa-chevron-down select-icon"></i>
+            </div>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col-md-6">
+            <div class="form-group">
+              <i class="fas fa-bolt input-icon"></i>
+              <select name="energy_source" class="form-select" required>
+                <option value="">Home Energy Source</option>
+                <option>Electricity - Grid</option>
+                <option>Electricity - Solar</option>
+                <option>Natural Gas</option>
+                <option>Coal</option>
+                <option>Wind</option>
+                <option>Hydro</option>
+              </select>
+              <i class="fas fa-chevron-down select-icon"></i>
+            </div>
+          </div>
+          <div class="col-md-6">
+            <div class="form-group">
+              <i class="fas fa-utensils input-icon"></i>
+              <select name="diet_type" class="form-select" required>
+                <option value="">Diet Type</option>
+                <option>Vegan</option>
+                <option>Vegetarian</option>
+                <option>Mixed</option>
+                <option>Non-Vegetarian</option>
+                <option>Pescatarian</option>
+              </select>
+              <i class="fas fa-chevron-down select-icon"></i>
+            </div>
+          </div>
+        </div>
+
+        <button type="submit" class="btn btn-register w-100">
+          <i class="fas fa-user-plus me-2"></i> Create My Eco Account
+        </button>
+      </form>
+
+      <div class="form-footer">
+        <p>Already have an account?
+          <a href="{{ url_for('login') }}">
+            Login Here <i class="fas fa-arrow-right"></i>
+          </a>
+        </p>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      const form = document.getElementById('registerForm');
+      const progressBar = document.getElementById('form-progress');
+      const progressPercentage = document.getElementById('progress-percentage');
+      const inputs = form.querySelectorAll('input, select');
+      const passwordToggle = document.getElementById('password-toggle');
+      const passwordInput = document.querySelector('input[name="password"]');
+
+      // Progress calculation
+      function updateProgress() {
+        let filled = 0;
+        inputs.forEach(input => {
+          if (input.value.trim() !== '') {
+            filled++;
+          }
+        });
+        
+        const progress = (filled / inputs.length) * 100;
+        progressBar.style.width = `${progress}%`;
+        progressPercentage.textContent = `${Math.round(progress)}%`;
+      }
+
+      // Add event listeners to all inputs
+      inputs.forEach(input => {
+        input.addEventListener('input', updateProgress);
+        input.addEventListener('change', updateProgress);
+        
+        // Add focus effect
+        input.addEventListener('focus', function() {
+          if (this.type !== 'select-one') {
+            this.parentElement.querySelector('.input-icon').style.color = 'var(--primary)';
+          }
+        });
+        
+        input.addEventListener('blur', function() {
+          if (!this.value && this.type !== 'select-one') {
+            this.parentElement.querySelector('.input-icon').style.color = '#95a5a6';
+          }
+        });
+      });
+
+      // Password toggle
+      passwordToggle.addEventListener('click', function() {
+        const type = passwordInput.getAttribute('type') === 'password' ? 'text' : 'password';
+        passwordInput.setAttribute('type', type);
+        this.classList.toggle('fa-eye');
+        this.classList.toggle('fa-eye-slash');
+      });
+
+      // Form submission animation
+      form.addEventListener('submit', function(e) {
+        const btn = this.querySelector('.btn-register');
+        btn.innerHTML = '<i class="fas fa-spinner fa-spin me-2"></i> Creating Account...';
+        btn.disabled = true;
+      });
+
+      // Initialize progress
+      updateProgress();
+    });
+  </script>
+</body>
+</html>

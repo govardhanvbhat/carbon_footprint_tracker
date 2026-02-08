@@ -1,0 +1,917 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Home | Carbon Tracker</title>
+
+    <!-- Bootstrap & Fonts -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
+
+    <style>
+        :root {
+            --primary: #00c6ff;
+            --primary-dark: #0072ff;
+            --secondary: #00d2ff;
+            --accent: #00ff88;
+            --warning: #ffa726;
+            --danger: #ff5252;
+            --dark: #1a1a2e;
+            --light: #f8f9fa;
+            --card-bg: rgba(255, 255, 255, 0.95);
+            --transition: all 0.3s ease;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: linear-gradient(135deg, #0f2027, #203a43, #2c5364);
+            min-height: 100vh;
+            color: var(--light);
+            overflow-x: hidden;
+            position: relative;
+        }
+
+        /* Animated Background */
+        .bg-particles {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            overflow: hidden;
+        }
+
+        .particle {
+            position: absolute;
+            background: rgba(0, 198, 255, 0.3);
+            border-radius: 50%;
+            animation: floatParticle 15s infinite linear;
+        }
+
+        .particle:nth-child(1) { width: 60px; height: 60px; top: 10%; left: 5%; animation-delay: 0s; }
+        .particle:nth-child(2) { width: 40px; height: 40px; top: 60%; left: 80%; animation-delay: 2s; }
+        .particle:nth-child(3) { width: 80px; height: 80px; top: 80%; left: 20%; animation-delay: 4s; }
+        .particle:nth-child(4) { width: 30px; height: 30px; top: 30%; left: 70%; animation-delay: 6s; }
+        .particle:nth-child(5) { width: 50px; height: 50px; top: 40%; left: 40%; animation-delay: 8s; }
+
+        /* Navigation */
+        .navbar {
+            background: rgba(26, 26, 46, 0.8);
+            backdrop-filter: blur(15px);
+            border-bottom: 1px solid rgba(0, 198, 255, 0.2);
+            padding: 15px 0;
+        }
+
+        .navbar-brand {
+            font-weight: 700;
+            font-size: 24px;
+            background: linear-gradient(135deg, var(--primary), var(--accent));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .user-welcome {
+            color: var(--light);
+            font-weight: 500;
+            margin-right: 15px;
+        }
+
+        /* Main Content */
+        .main-content {
+            padding: 30px 0;
+        }
+
+        .welcome-section {
+            text-align: center;
+            margin-bottom: 50px;
+            position: relative;
+        }
+
+        .welcome-title {
+            font-size: 3rem;
+            font-weight: 700;
+            margin-bottom: 15px;
+            background: linear-gradient(135deg, var(--primary), var(--accent));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .welcome-subtitle {
+            font-size: 1.2rem;
+            opacity: 0.9;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        /* Stats Overview */
+        .stats-overview {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            margin-bottom: 40px;
+            flex-wrap: wrap;
+        }
+
+        .stat-card {
+            background: var(--card-bg);
+            color: var(--dark);
+            padding: 25px;
+            border-radius: 20px;
+            text-align: center;
+            min-width: 200px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            transition: var(--transition);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .stat-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 4px;
+            background: linear-gradient(135deg, var(--primary), var(--accent));
+        }
+
+        .stat-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.3);
+        }
+
+        .stat-icon {
+            font-size: 2.5rem;
+            margin-bottom: 15px;
+            background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .stat-value {
+            font-size: 2rem;
+            font-weight: 700;
+            margin-bottom: 5px;
+        }
+
+        .stat-label {
+            font-size: 0.9rem;
+            opacity: 0.8;
+        }
+
+        /* Quick Actions */
+        .quick-actions {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 25px;
+            margin-bottom: 50px;
+        }
+
+        .action-card {
+            background: var(--card-bg);
+            color: var(--dark);
+            padding: 30px;
+            border-radius: 20px;
+            text-align: center;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            transition: var(--transition);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .action-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 5px;
+            background: linear-gradient(135deg, var(--primary), var(--accent));
+        }
+
+        .action-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.3);
+        }
+
+        .action-icon {
+            font-size: 3rem;
+            margin-bottom: 20px;
+            background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .action-title {
+            font-size: 1.5rem;
+            font-weight: 600;
+            margin-bottom: 10px;
+        }
+
+        .action-description {
+            font-size: 0.95rem;
+            opacity: 0.8;
+            margin-bottom: 20px;
+        }
+
+        .action-btn {
+            background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+            color: white;
+            border: none;
+            padding: 10px 25px;
+            border-radius: 50px;
+            font-weight: 500;
+            transition: var(--transition);
+            text-decoration: none;
+            display: inline-block;
+        }
+
+        .action-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0, 114, 255, 0.4);
+            color: white;
+        }
+
+        .chart-section {
+    background: var(--card-bg);
+    color: var(--dark);
+    border-radius: 20px;
+    padding: 30px;
+    margin-bottom: 40px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    position: relative;
+    overflow: hidden;
+    text-align: center; /* Add this to center text content */
+}
+
+.chart-section::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 4px;
+    background: linear-gradient(135deg, var(--primary), var(--accent));
+}
+
+.chart-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 25px;
+    text-align: center; /* Center the header content */
+}
+
+.chart-title {
+    font-size: 1.5rem;
+    font-weight: 600;
+    color: var(--dark);
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    justify-content: center; /* Center the title */
+    width: 100%; /* Make title take full width */
+}
+
+.chart-title i {
+    background: linear-gradient(135deg, var(--primary), var(--accent));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.chart-actions {
+    display: flex;
+    gap: 10px;
+    justify-content: center; /* Center the action buttons */
+    width: 100%; /* Make actions take full width */
+    margin-top: 15px; /* Add some spacing */
+}
+
+.chart-btn {
+    background: rgba(0, 198, 255, 0.1);
+    color: var(--primary);
+    border: 1px solid rgba(0, 198, 255, 0.3);
+    padding: 8px 15px;
+    border-radius: 50px;
+    font-size: 0.9rem;
+    transition: var(--transition);
+    font-weight: 500;
+}
+
+.chart-btn.active {
+    background: var(--primary);
+    color: white;
+    box-shadow: 0 4px 15px rgba(0, 198, 255, 0.3);
+}
+
+.chart-btn:hover:not(.active) {
+    background: rgba(0, 198, 255, 0.2);
+    transform: translateY(-2px);
+}
+
+.chart-content {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center; /* Center the chart content */
+    justify-content: center;
+}
+
+.chart-metrics {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    gap: 15px;
+    margin-bottom: 25px;
+    padding: 20px;
+    background: rgba(0, 198, 255, 0.05);
+    border-radius: 15px;
+    border: 1px solid rgba(0, 198, 255, 0.1);
+    width: 100%; /* Ensure metrics take full width */
+    max-width: 600px; /* Optional: limit max width for better centering */
+    margin-left: auto;
+    margin-right: auto;
+}
+
+/* For mobile responsiveness */
+@media (max-width: 768px) {
+    .chart-header {
+        flex-direction: column;
+        gap: 15px;
+    }
+    
+    .chart-title {
+        justify-content: center;
+    }
+    
+    .chart-actions {
+        justify-content: center;
+        flex-wrap: wrap;
+    }
+    
+    .chart-metrics {
+        grid-template-columns: repeat(2, 1fr); /* 2 columns on mobile */
+    }
+}
+
+@media (max-width: 480px) {
+    .chart-metrics {
+        grid-template-columns: 1fr; /* 1 column on very small screens */
+    }
+}
+        
+
+        .metric-item {
+            text-align: center;
+            padding: 15px;
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            transition: var(--transition);
+        }
+
+        .metric-item:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
+        }
+
+        .metric-value {
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: 5px;
+        }
+
+        .metric-value.good { color: var(--accent); }
+        .metric-value.warning { color: var(--warning); }
+        .metric-value.danger { color: var(--danger); }
+
+        .metric-label {
+            font-size: 0.8rem;
+            color: #666;
+            font-weight: 500;
+        }
+
+        .chart-visual {
+            background: white;
+            border-radius: 15px;
+            padding: 20px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            border: 1px solid rgba(0, 0, 0, 0.1);
+        }
+
+        /* Enhanced AI Suggestions */
+        .ai-suggestions {
+            background: var(--card-bg);
+            color: var(--dark);
+            border-radius: 20px;
+            padding: 30px;
+            margin-bottom: 40px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .ai-suggestions::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 4px;
+            background: linear-gradient(135deg, var(--accent), var(--primary));
+        }
+
+        .ai-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 25px;
+        }
+
+        .ai-icon {
+            font-size: 2rem;
+            margin-right: 15px;
+            background: linear-gradient(135deg, var(--accent), var(--primary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .ai-title {
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: var(--dark);
+        }
+
+        .ai-subtitle {
+            color: #666;
+            font-size: 0.9rem;
+            margin-left: auto;
+            background: rgba(0, 198, 255, 0.1);
+            padding: 5px 12px;
+            border-radius: 20px;
+            font-weight: 500;
+        }
+
+        .suggestion-list {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .suggestion-item {
+            display: flex;
+            align-items: flex-start;
+            padding: 20px;
+            background: rgba(0, 198, 255, 0.05);
+            border-radius: 15px;
+            border-left: 4px solid var(--accent);
+            transition: var(--transition);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .suggestion-item::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(0, 255, 136, 0.1), transparent);
+            transition: left 0.6s ease;
+        }
+
+        .suggestion-item:hover::before {
+            left: 100%;
+        }
+
+        .suggestion-item:hover {
+            transform: translateX(5px);
+            box-shadow: 0 5px 20px rgba(0, 198, 255, 0.15);
+        }
+
+        .suggestion-icon {
+            margin-right: 15px;
+            color: var(--accent);
+            font-size: 1.3rem;
+            margin-top: 2px;
+            background: rgba(0, 255, 136, 0.1);
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+        }
+
+        .suggestion-content {
+            flex: 1;
+        }
+
+        .suggestion-text {
+            font-size: 0.95rem;
+            line-height: 1.5;
+            margin-bottom: 8px;
+            color: var(--dark);
+        }
+
+        .suggestion-category {
+            display: inline-block;
+            background: rgba(0, 198, 255, 0.1);
+            color: var(--primary);
+            padding: 4px 10px;
+            border-radius: 12px;
+            font-size: 0.75rem;
+            font-weight: 600;
+        }
+
+        .suggestion-actions {
+            display: flex;
+            gap: 10px;
+            margin-top: 10px;
+        }
+
+        .suggestion-btn {
+            background: rgba(0, 198, 255, 0.1);
+            color: var(--primary);
+            border: 1px solid rgba(0, 198, 255, 0.3);
+            padding: 6px 12px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            transition: var(--transition);
+            cursor: pointer;
+        }
+
+        .suggestion-btn:hover {
+            background: var(--primary);
+            color: white;
+            transform: translateY(-1px);
+        }
+
+        .empty-state {
+            text-align: center;
+            padding: 40px 30px;
+            color: var(--dark);
+        }
+
+        .empty-icon {
+            font-size: 4rem;
+            margin-bottom: 20px;
+            opacity: 0.5;
+            background: linear-gradient(135deg, var(--primary), var(--accent));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .empty-title {
+            font-size: 1.3rem;
+            font-weight: 600;
+            margin-bottom: 10px;
+            color: var(--dark);
+        }
+
+        .empty-text {
+            color: #666;
+            margin-bottom: 25px;
+            max-width: 400px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        /* Footer */
+        footer {
+            text-align: center;
+            padding: 30px 0;
+            color: rgba(255, 255, 255, 0.7);
+            font-size: 0.9rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            margin-top: 50px;
+        }
+
+        /* Animations */
+        @keyframes floatParticle {
+            0% { transform: translateY(0) rotate(0deg); }
+            50% { transform: translateY(-20px) rotate(180deg); }
+            100% { transform: translateY(0) rotate(360deg); }
+        }
+
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .animate-in {
+            animation: fadeInUp 0.6s ease forwards;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .welcome-title {
+                font-size: 2.2rem;
+            }
+            
+            .stats-overview {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            .stat-card {
+                width: 100%;
+                max-width: 300px;
+            }
+            
+            .quick-actions {
+                grid-template-columns: 1fr;
+            }
+
+            .chart-header {
+                flex-direction: column;
+                gap: 15px;
+                align-items: flex-start;
+            }
+
+            .chart-metrics {
+                grid-template-columns: 1fr;
+            }
+
+            .ai-header {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 10px;
+            }
+
+            .ai-subtitle {
+                margin-left: 0;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+<!-- Animated Background -->
+<div class="bg-particles">
+    <div class="particle"></div>
+    <div class="particle"></div>
+    <div class="particle"></div>
+    <div class="particle"></div>
+    <div class="particle"></div>
+</div>
+
+<!-- Navigation -->
+<nav class="navbar navbar-expand-lg">
+    <div class="container">
+        <a class="navbar-brand" href="/">🌍 Carbon Tracker</a>
+        <div class="d-flex align-items-center">
+            <span class="user-welcome">Welcome, Eco Warrior!</span>
+            <a class="btn btn-outline-light btn-sm" href="{{ url_for('logout') }}">
+                <i class="fas fa-sign-out-alt me-1"></i> Logout
+            </a>
+        </div>
+    </div>
+</nav>
+
+<!-- Main Content -->
+<div class="container main-content">
+    <!-- Welcome Section -->
+    <div class="welcome-section animate-in">
+        <h1 class="welcome-title">Your Sustainability Hub</h1>
+        <p class="welcome-subtitle">Track, analyze, and reduce your carbon footprint with AI-powered insights</p>
+    </div>
+
+    <!-- Stats Overview -->
+    <div class="stats-overview animate-in" style="animation-delay: 0.2s">
+        <div class="stat-card">
+            <div class="stat-icon">
+                <i class="fas fa-leaf"></i>
+            </div>
+            <div class="stat-value">37.4bt</div>
+            <div class="stat-label">CO2 Last Year</div>
+        </div>
+        
+        <div class="stat-card">
+            <div class="stat-icon">
+                <i class="fas fa-trophy"></i>
+            </div>
+            <div class="stat-value">-0.8%</div>
+            <div class="stat-label">vs This Year</div>
+        </div>
+        
+        <div class="stat-card">
+            <div class="stat-icon">
+                <i class="fas fa-tree"></i>
+            </div>
+            <div class="stat-value">40b</div>
+            <div class="stat-label">Trees Saved</div>
+        </div>
+        
+        <div class="stat-card">
+            <div class="stat-icon">
+                <div class="progress-circle" data-value="87">
+                    <i class="fas fa-bolt"></i>
+                </div>
+            </div>
+            <div class="stat-value">1.1%</div>
+            <div class="stat-label">Goal Progress</div>
+        </div>
+    </div>
+
+    <!-- Quick Actions -->
+    <div class="quick-actions animate-in" style="animation-delay: 0.4s">
+        <div class="action-card">
+            <div class="action-icon">
+                <i class="fas fa-chart-line"></i>
+            </div>
+            <h3 class="action-title">Dashboard</h3>
+            <p class="action-description">Visualize your carbon footprint with interactive charts and detailed analytics</p>
+            <a href="{{ url_for('dashboard') }}" class="action-btn">View Dashboard</a>
+        </div>
+        
+        <div class="action-card">
+            <div class="action-icon">
+                <i class="fas fa-plus-circle"></i>
+            </div>
+            <h3 class="action-title">Add Activity</h3>
+            <p class="action-description">Log your daily activities and track their environmental impact</p>
+            <a href="{{ url_for('add_activity') }}" class="action-btn">Log Activity</a>
+        </div>
+        
+        <div class="action-card">
+            <div class="action-icon">
+                <i class="fas fa-leaf"></i>
+            </div>
+            <h3 class="action-title">Impact Simulator</h3>
+            <p class="action-description">Explore how lifestyle changes can reduce your carbon emissions</p>
+            <a href="{{ url_for('impact_simulator') }}" class="action-btn">Try Simulator</a>
+        </div>
+    </div>
+
+    <!-- Enhanced Chart Section -->
+    <div class="chart-section animate-in" style="animation-delay: 0.6s">
+        <div class="chart-header">
+            <h2 class="chart-title">
+                <i class="fas fa-chart-pie"></i>
+                Carbon Footprint Overview
+            </h2>
+          
+        </div>
+        
+        <!-- Chart Metrics -->
+       
+        
+        <div class="chart-content">
+            {% if plot_data %}
+                <div class="chart-visual">
+                    <img id="chart" src="data:image/png;base64,{{ plot_data }}" class="img-fluid rounded" alt="Carbon Footprint Chart">
+                </div>
+            {% else %}
+                <div class="empty-state">
+                    <div class="empty-icon">
+                        <i class="fas fa-chart-pie"></i>
+                    </div>
+                    <h4 class="empty-title">No Data Yet</h4>
+                    <p class="empty-text">Add your first activity to see your carbon footprint visualization and track your environmental impact</p>
+                    <a href="{{ url_for('add_activity') }}" class="action-btn">Add Your First Activity</a>
+                </div>
+            {% endif %}
+        </div>
+    </div>
+
+    <!-- Enhanced AI Suggestions -->
+    <div class="ai-suggestions animate-in" style="animation-delay: 0.8s">
+        <div class="ai-header">
+            <div class="ai-icon">
+                <i class="fas fa-robot"></i>
+            </div>
+            <h2 class="ai-title">AI-Powered Suggestions</h2>
+            <div class="ai-subtitle">
+                <i class="fas fa-sync-alt me-1"></i> Updated just now
+            </div>
+        </div>
+        
+        <div class="suggestion-list">
+            {% if suggestions %}
+                {% for s in suggestions %}
+                    <div class="suggestion-item">
+                        <div class="suggestion-icon">
+                            <i class="fas fa-lightbulb"></i>
+                        </div>
+                        <div class="suggestion-content">
+                            <div class="suggestion-text">{{ s }}</div>
+                            <div class="suggestion-category">
+                                {% if loop.index == 1 %}Transportation{% endif %}
+                                {% if loop.index == 2 %}Energy{% endif %}
+                                {% if loop.index == 3 %}Lifestyle{% endif %}
+                                {% if loop.index == 4 %}Diet{% endif %}
+                            </div>
+                            <div class="suggestion-actions">
+                                <button class="suggestion-btn">
+                                    <i class="fas fa-check me-1"></i>Mark Done
+                                </button>
+                                <button class="suggestion-btn">
+                                    <i class="fas fa-info-circle me-1"></i>Learn More
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                {% endfor %}
+            {% else %}
+                <div class="empty-state">
+                    <div class="empty-icon">
+                        <i class="fas fa-robot"></i>
+                    </div>
+                    <h4 class="empty-title">No Suggestions Yet</h4>
+                    <p class="empty-text">Start adding activities to receive personalized sustainability tips and AI-powered insights tailored to your lifestyle</p>
+                    <a href="{{ url_for('add_activity') }}" class="action-btn">Get Started with Activities</a>
+                </div>
+            {% endif %}
+        </div>
+    </div>
+</div>
+
+<!-- Footer -->
+<footer>
+    <div class="container">
+        <p>© 2025 Carbon Tracker | Empowering Sustainable Living 🌎</p>
+        <p class="mt-2">Track your impact, make a difference</p>
+    </div>
+</footer>
+
+<script>
+    // Add interactive animations
+    document.addEventListener('DOMContentLoaded', function() {
+        // Add hover effects to cards
+        const cards = document.querySelectorAll('.stat-card, .action-card');
+        cards.forEach(card => {
+            card.addEventListener('mouseenter', function() {
+                this.style.transform = 'translateY(-8px)';
+            });
+            
+            card.addEventListener('mouseleave', function() {
+                this.style.transform = 'translateY(0)';
+            });
+        });
+        
+        // Add staggered animation to suggestion items
+        const suggestions = document.querySelectorAll('.suggestion-item');
+        suggestions.forEach((item, index) => {
+            item.style.animationDelay = `${index * 0.1}s`;
+            item.classList.add('animate-in');
+        });
+        
+        // Chart period toggle with enhanced interaction
+        const chartBtns = document.querySelectorAll('.chart-btn');
+        chartBtns.forEach(btn => {
+            btn.addEventListener('click', function() {
+                chartBtns.forEach(b => b.classList.remove('active'));
+                this.classList.add('active');
+                
+                // Add visual feedback
+                this.style.transform = 'scale(0.95)';
+                setTimeout(() => {
+                    this.style.transform = 'scale(1)';
+                }, 150);
+            });
+        });
+        
+        // Suggestion item interactions
+        const suggestionItems = document.querySelectorAll('.suggestion-item');
+        suggestionItems.forEach(item => {
+            const markDoneBtn = item.querySelector('.suggestion-btn:first-child');
+            const learnMoreBtn = item.querySelector('.suggestion-btn:last-child');
+            
+            markDoneBtn.addEventListener('click', function(e) {
+                e.stopPropagation();
+                this.innerHTML = '<i class="fas fa-check me-1"></i>Completed!';
+                this.style.background = 'var(--accent)';
+                this.style.color = 'white';
+                this.style.borderColor = 'var(--accent)';
+                
+                // Add completion animation
+                item.style.opacity = '0.7';
+                setTimeout(() => {
+                    item.style.opacity = '1';
+                }, 300);
+            });
+            
+            learnMoreBtn.addEventListener('click', function(e) {
+                e.stopPropagation();
+                // Here you would typically show more details
+                alert('More information about this suggestion would appear here!');
+            });
+        });
+        
+        // Initialize first chart button as active
+        if (chartBtns.length > 0) {
+            chartBtns[0].classList.add('active');
+        }
+    });
+</script>
+
+</body>
+</html>

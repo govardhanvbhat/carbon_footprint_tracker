@@ -1,0 +1,770 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Add Activity | Carbon Tracker</title>
+
+  <!-- Bootstrap + Icons -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
+
+  <style>
+    :root {
+      --primary: #6366f1;
+      --primary-dark: #4f46e5;
+      --secondary: #06b6d4;
+      --accent: #10b981;
+      --dark: #1e293b;
+      --light: #f8fafc;
+      --card-bg: #ffffff;
+      --sidebar-bg: #1e293b;
+    }
+
+    body {
+      font-family: 'Poppins', sans-serif;
+      background: linear-gradient(135deg, #0f172a, #1e293b, #334155);
+      min-height: 100vh;
+      color: var(--light);
+      overflow-x: hidden;
+    }
+
+    /* Layout */
+    .dashboard-container {
+      display: flex;
+      min-height: 100vh;
+    }
+
+    /* Sidebar */
+    .sidebar {
+      width: 280px;
+      background: var(--sidebar-bg);
+      padding: 0;
+      border-right: 1px solid #334155;
+    }
+
+    .sidebar-header {
+      padding: 25px 20px;
+      border-bottom: 1px solid #334155;
+    }
+
+    .sidebar-brand {
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: white;
+      text-decoration: none;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .sidebar-nav {
+      padding: 20px 0;
+    }
+
+    .nav-item {
+      margin-bottom: 5px;
+    }
+
+    .nav-link {
+      color: #cbd5e1;
+      padding: 12px 20px;
+      text-decoration: none;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      transition: all 0.3s ease;
+      border-left: 3px solid transparent;
+    }
+
+    .nav-link:hover, .nav-link.active {
+      background: #334155;
+      color: white;
+      border-left-color: var(--primary);
+    }
+
+    .nav-link i {
+      width: 20px;
+      text-align: center;
+    }
+
+    /* Main Content */
+    .main-content {
+      flex: 1;
+      padding: 30px;
+      overflow-y: auto;
+    }
+
+    .header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 30px;
+      padding-bottom: 20px;
+      border-bottom: 1px solid #334155;
+    }
+
+    .header-title h1 {
+      font-size: 2.2rem;
+      font-weight: 700;
+      margin: 0;
+      background: linear-gradient(135deg, var(--primary), var(--secondary));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .header-title p {
+      color: #94a3b8;
+      margin: 5px 0 0 0;
+    }
+
+    /* Activity Form */
+    .activity-form-container {
+      max-width: 800px;
+      margin: 0 auto;
+    }
+
+    .form-card {
+      background: var(--card-bg);
+      border-radius: 20px;
+      padding: 40px;
+      box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
+      border: 1px solid #e2e8f0;
+      color: var(--dark);
+    }
+
+    .form-header {
+      text-align: center;
+      margin-bottom: 30px;
+    }
+
+    .form-icon {
+      width: 80px;
+      height: 80px;
+      background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto 20px;
+      font-size: 2rem;
+      color: white;
+    }
+
+    .form-title {
+      font-size: 1.8rem;
+      font-weight: 700;
+      margin-bottom: 10px;
+      color: var(--dark);
+    }
+
+    .form-subtitle {
+      color: #64748b;
+      font-size: 1rem;
+    }
+
+    /* Form Groups */
+    .form-section {
+      margin-bottom: 30px;
+      padding: 25px;
+      background: #f8fafc;
+      border-radius: 15px;
+      border-left: 4px solid var(--primary);
+    }
+
+    .section-title {
+      font-size: 1.2rem;
+      font-weight: 600;
+      margin-bottom: 20px;
+      color: var(--dark);
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .section-title i {
+      color: var(--primary);
+    }
+
+    .form-group {
+      margin-bottom: 20px;
+    }
+
+    .form-label {
+      font-weight: 600;
+      color: var(--dark);
+      margin-bottom: 8px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .form-label i {
+      color: var(--primary);
+      font-size: 0.9rem;
+    }
+
+    .form-control, .form-select {
+      border: 2px solid #e2e8f0;
+      border-radius: 12px;
+      padding: 12px 16px;
+      font-size: 1rem;
+      transition: all 0.3s ease;
+      background: white;
+    }
+
+    .form-control:focus, .form-select:focus {
+      border-color: var(--primary);
+      box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.1);
+    }
+
+    .input-with-icon {
+      position: relative;
+    }
+
+    .input-icon {
+      position: absolute;
+      left: 15px;
+      top: 50%;
+      transform: translateY(-50%);
+      color: #64748b;
+    }
+
+    .input-with-icon .form-control {
+      padding-left: 45px;
+    }
+
+    /* Activity Type Cards */
+    .activity-types {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      gap: 15px;
+      margin-bottom: 20px;
+    }
+
+    .activity-type-card {
+      background: white;
+      border: 2px solid #e2e8f0;
+      border-radius: 12px;
+      padding: 20px 15px;
+      text-align: center;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+
+    .activity-type-card:hover {
+      border-color: var(--primary);
+      transform: translateY(-2px);
+    }
+
+    .activity-type-card.selected {
+      border-color: var(--primary);
+      background: rgba(99, 102, 241, 0.05);
+    }
+
+    .activity-icon {
+      font-size: 2rem;
+      margin-bottom: 10px;
+      color: var(--primary);
+    }
+
+    .activity-name {
+      font-weight: 600;
+      color: var(--dark);
+      margin-bottom: 5px;
+    }
+
+    .activity-desc {
+      font-size: 0.8rem;
+      color: #64748b;
+    }
+
+    /* Buttons */
+    .btn-primary-custom {
+      background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+      border: none;
+      color: white;
+      padding: 15px 30px;
+      border-radius: 12px;
+      font-weight: 600;
+      font-size: 1.1rem;
+      transition: all 0.3s ease;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      width: 100%;
+    }
+
+    .btn-primary-custom:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 25px rgba(99, 102, 241, 0.4);
+    }
+
+    .btn-secondary-custom {
+      background: #f1f5f9;
+      border: 2px solid #e2e8f0;
+      color: #64748b;
+      padding: 15px 30px;
+      border-radius: 12px;
+      font-weight: 600;
+      transition: all 0.3s ease;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      width: 100%;
+      text-decoration: none;
+    }
+
+    .btn-secondary-custom:hover {
+      background: #e2e8f0;
+      color: var(--dark);
+      transform: translateY(-2px);
+    }
+
+    .button-group {
+      display: flex;
+      gap: 15px;
+      margin-top: 30px;
+    }
+
+    /* Recent Activities */
+    .recent-activities {
+      margin-top: 40px;
+    }
+
+    .recent-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 20px;
+    }
+
+    .recent-title {
+      font-size: 1.3rem;
+      font-weight: 600;
+      color: var(--light);
+    }
+
+    .activity-list {
+      display: flex;
+      flex-direction: column;
+      gap: 15px;
+    }
+
+    .activity-item {
+      background: rgba(255, 255, 255, 0.05);
+      border-radius: 12px;
+      padding: 20px;
+      display: flex;
+      align-items: center;
+      gap: 15px;
+      transition: all 0.3s ease;
+    }
+
+    .activity-item:hover {
+      background: rgba(255, 255, 255, 0.1);
+      transform: translateX(5px);
+    }
+
+    .activity-item-icon {
+      width: 50px;
+      height: 50px;
+      background: rgba(99, 102, 241, 0.1);
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.5rem;
+      color: var(--primary);
+    }
+
+    .activity-item-content {
+      flex: 1;
+    }
+
+    .activity-item-title {
+      font-weight: 600;
+      margin-bottom: 5px;
+    }
+
+    .activity-item-details {
+      color: #94a3b8;
+      font-size: 0.9rem;
+    }
+
+    .activity-item-impact {
+      font-weight: 600;
+      color: var(--accent);
+    }
+
+    /* Animations */
+    @keyframes fadeInUp {
+      from {
+        opacity: 0;
+        transform: translateY(20px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .animate-in {
+      animation: fadeInUp 0.6s ease forwards;
+    }
+
+    /* Responsive */
+    @media (max-width: 1024px) {
+      .dashboard-container {
+        flex-direction: column;
+      }
+      
+      .sidebar {
+        width: 100%;
+        height: auto;
+      }
+      
+      .sidebar-nav {
+        display: flex;
+        overflow-x: auto;
+        padding: 15px 20px;
+      }
+      
+      .nav-item {
+        margin-bottom: 0;
+        margin-right: 10px;
+      }
+      
+      .nav-link {
+        border-left: none;
+        border-bottom: 3px solid transparent;
+        white-space: nowrap;
+      }
+      
+      .nav-link.active {
+        border-left-color: transparent;
+        border-bottom-color: var(--primary);
+      }
+    }
+
+    @media (max-width: 768px) {
+      .main-content {
+        padding: 20px;
+      }
+      
+      .form-card {
+        padding: 25px;
+      }
+      
+      .activity-types {
+        grid-template-columns: repeat(2, 1fr);
+      }
+      
+      .button-group {
+        flex-direction: column;
+      }
+      
+      .header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 15px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <div class="dashboard-container">
+    <!-- Sidebar -->
+    <div class="sidebar">
+      <div class="sidebar-header">
+        <a href="{{ url_for('home') }}" class="sidebar-brand">
+          <i class="fas fa-leaf"></i>
+          Carbon Tracker
+        </a>
+      </div>
+      <div class="sidebar-nav">
+        <div class="nav-item">
+          <a href="{{ url_for('home') }}" class="nav-link">
+            <i class="fas fa-home"></i>
+            Home
+          </a>
+        </div>
+        <div class="nav-item">
+          <a href="{{ url_for('dashboard') }}" class="nav-link">
+            <i class="fas fa-chart-line"></i>
+            Analytics
+          </a>
+        </div>
+        <div class="nav-item">
+          <a href="{{ url_for('add_activity') }}" class="nav-link active">
+            <i class="fas fa-plus-circle"></i>
+            Add Activity
+          </a>
+        </div>
+        <div class="nav-item">
+          <a href="{{ url_for('impact_simulator') }}" class="nav-link">
+            <i class="fas fa-sliders-h"></i>
+            Simulator
+          </a>
+        </div>
+        <div class="nav-item">
+          <a href="{{ url_for('logout') }}" class="nav-link">
+            <i class="fas fa-sign-out-alt"></i>
+            Logout
+          </a>
+        </div>
+      </div>
+    </div>
+
+    <!-- Main Content -->
+    <div class="main-content">
+      <!-- Header -->
+      <div class="header">
+        <div class="header-title">
+          <h1>Log New Activity</h1>
+          <p>Track your carbon emissions and environmental impact</p>
+        </div>
+        <div>
+          <a href="{{ url_for('dashboard') }}" class="btn btn-secondary-custom" style="width: auto;">
+            <i class="fas fa-arrow-left"></i> Back to Dashboard
+          </a>
+        </div>
+      </div>
+
+      <!-- Activity Form -->
+      <div class="activity-form-container">
+        <div class="form-card animate-in">
+          <div class="form-header">
+            <div class="form-icon">
+              <i class="fas fa-plus"></i>
+            </div>
+            <h2 class="form-title">Add Carbon Activity</h2>
+            <p class="form-subtitle">Log your daily activities to track environmental impact</p>
+          </div>
+
+          <form method="POST">
+            <input type="hidden" name="user_id" value="{{ session['user_id'] }}">
+
+            <!-- Activity Type Section -->
+            <div class="form-section animate-in" style="animation-delay: 0.1s">
+              <h3 class="section-title">
+                <i class="fas fa-layer-group"></i>
+                Activity Category
+              </h3>
+              
+              <div class="form-group">
+                <label class="form-label">
+                  <i class="fas fa-tag"></i>
+                  Activity Type
+                </label>
+                <select class="form-select" name="activity_type" id="activityType" required>
+                  <option value="">Select an activity type</option>
+                  {% for act in activities %}
+                    <option value="{{ act['subcategory'] }}" data-category="{{ act['category'] }}">
+                      {{ act['category'] }} - {{ act['subcategory'] }}
+                    </option>
+                  {% endfor %}
+                </select>
+              </div>
+
+              <!-- Quick Select Cards -->
+              <div class="activity-types" id="activityTypeCards">
+                <div class="activity-type-card" data-type="transport-car">
+                  <div class="activity-icon">
+                    <i class="fas fa-car"></i>
+                  </div>
+                  <div class="activity-name">Car Travel</div>
+                  <div class="activity-desc">Gasoline/Diesel vehicles</div>
+                </div>
+                
+                <div class="activity-type-card" data-type="transport-bus">
+                  <div class="activity-icon">
+                    <i class="fas fa-bus"></i>
+                  </div>
+                  <div class="activity-name">Bus Travel</div>
+                  <div class="activity-desc">Public transportation</div>
+                </div>
+                
+                <div class="activity-type-card" data-type="energy-electricity">
+                  <div class="activity-icon">
+                    <i class="fas fa-bolt"></i>
+                  </div>
+                  <div class="activity-name">Electricity</div>
+                  <div class="activity-desc">Home energy usage</div>
+                </div>
+                
+                <div class="activity-type-card" data-type="food-meat">
+                  <div class="activity-icon">
+                    <i class="fas fa-drumstick-bite"></i>
+                  </div>
+                  <div class="activity-name">Meat Consumption</div>
+                  <div class="activity-desc">lamb, chicken, pork</div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Activity Details Section -->
+            <div class="form-section animate-in" style="animation-delay: 0.2s">
+              <h3 class="section-title">
+                <i class="fas fa-info-circle"></i>
+                Activity Details
+              </h3>
+              
+              <div class="form-group">
+                <label class="form-label">
+                  <i class="fas fa-clipboard-list"></i>
+                  Description
+                </label>
+                <div class="input-with-icon">
+                  <i class="fas fa-pen input-icon"></i>
+                  <input type="text" class="form-control" name="activity_details" placeholder="E.g., Daily commute to work" required>
+                </div>
+              </div>
+
+              <div class="row">
+                <div class="col-md-6">
+                  <div class="form-group">
+                    <label class="form-label">
+                      <i class="fas fa-balance-scale"></i>
+                      Quantity
+                    </label>
+                    <div class="input-with-icon">
+                      <i class="fas fa-hashtag input-icon"></i>
+                      <input type="number" class="form-control" name="quantity" step="0.01" placeholder="Enter quantity" required>
+                    </div>
+                  </div>
+                </div>
+                
+                <div class="col-md-6">
+                  <div class="form-group">
+                    <label class="form-label">
+                      <i class="fas fa-ruler"></i>
+                      Unit
+                    </label>
+                    <div class="input-with-icon">
+                      <i class="fas fa-weight input-icon"></i>
+                      <input type="text" class="form-control" name="unit" placeholder="E.g., km, kWh, kg" required>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Estimated Impact Preview -->
+            <div class="form-section animate-in" style="animation-delay: 0.3s">
+              <h3 class="section-title">
+                <i class="fas fa-chart-line"></i>
+                Estimated Impact
+              </h3>
+              <div class="alert alert-info" style="background: rgba(6, 182, 212, 0.1); border: 1px solid rgba(6, 182, 212, 0.3); color: #0e7490;">
+                <div class="d-flex align-items-center">
+                  <i class="fas fa-info-circle me-2"></i>
+                  <span>Complete the form to see estimated carbon impact</span>
+                </div>
+              </div>
+            </div>
+
+            <!-- Action Buttons -->
+            <div class="button-group animate-in" style="animation-delay: 0.4s">
+              <button type="submit" class="btn btn-primary-custom">
+                <i class="fas fa-plus-circle"></i>
+                Add Activity
+              </button>
+              <a href="{{ url_for('dashboard') }}" class="btn btn-secondary-custom">
+                <i class="fas fa-times"></i>
+                Cancel
+              </a>
+            </div>
+          </form>
+        </div>
+
+        <!-- Recent Activities -->
+      </div>
+    </div>
+  </div>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      // Activity type card selection
+      const activityCards = document.querySelectorAll('.activity-type-card');
+      const activitySelect = document.getElementById('activityType');
+      
+      activityCards.forEach(card => {
+        card.addEventListener('click', function() {
+          // Remove selected class from all cards
+          activityCards.forEach(c => c.classList.remove('selected'));
+          
+          // Add selected class to clicked card
+          this.classList.add('selected');
+          
+          // Find matching option in select
+          const activityType = this.getAttribute('data-type');
+          const option = Array.from(activitySelect.options).find(opt => 
+            opt.value.toLowerCase().includes(activityType.split('-')[1])
+          );
+          
+          if (option) {
+            activitySelect.value = option.value;
+          }
+        });
+      });
+      
+      // Update cards when select changes
+      activitySelect.addEventListener('change', function() {
+        const value = this.value.toLowerCase();
+        activityCards.forEach(card => {
+          card.classList.remove('selected');
+          if (value.includes(card.getAttribute('data-type').split('-')[1])) {
+            card.classList.add('selected');
+          }
+        });
+      });
+      
+      // Form validation and impact estimation
+      const form = document.querySelector('form');
+      const quantityInput = document.querySelector('input[name="quantity"]');
+      const unitInput = document.querySelector('input[name="unit"]');
+      
+      function estimateImpact() {
+        // Simple impact estimation logic
+        const quantity = parseFloat(quantityInput.value) || 0;
+        const unit = unitInput.value.toLowerCase();
+        const activityType = activitySelect.value.toLowerCase();
+        
+        // This would be replaced with actual calculation logic
+        console.log('Estimating impact for:', quantity, unit, activityType);
+      }
+      
+      quantityInput.addEventListener('input', estimateImpact);
+      unitInput.addEventListener('input', estimateImpact);
+      activitySelect.addEventListener('change', estimateImpact);
+      
+      // Add animation to form sections on scroll
+      const observerOptions = {
+        threshold: 0.1,
+        rootMargin: '0px 0px -50px 0px'
+      };
+      
+      const observer = new IntersectionObserver(function(entries) {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            entry.target.style.opacity = '1';
+            entry.target.style.transform = 'translateY(0)';
+          }
+        });
+      }, observerOptions);
+      
+      const animatedElements = document.querySelectorAll('.animate-in');
+      animatedElements.forEach(el => {
+        el.style.opacity = '0';
+        el.style.transform = 'translateY(20px)';
+        el.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+        observer.observe(el);
+      });
+    });
+  </script>
+</body>
+</html>

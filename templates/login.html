@@ -1,0 +1,681 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Login | Carbon Tracker</title>
+
+  <!-- Bootstrap -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+  <!-- Google Font -->
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+  <style>
+    :root {
+      --primary: #2ecc71;
+      --primary-dark: #27ae60;
+      --secondary: #3498db;
+      --dark: #2c3e50;
+      --light: #ecf0f1;
+      --white: #ffffff;
+      --shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+      --transition: all 0.3s ease;
+    }
+
+    body {
+      margin: 0;
+      font-family: 'Poppins', sans-serif;
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      background: linear-gradient(135deg, #1a3c27, #2c5e3b, #3a7d54);
+      background-size: 400% 400%;
+      animation: gradientShift 15s ease infinite;
+      position: relative;
+      overflow: hidden;
+    }
+
+    /* Nature Background Elements */
+    .nature-background {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: 0;
+    }
+
+    .tree {
+      position: absolute;
+      bottom: 0;
+      width: 150px;
+      height: 200px;
+    }
+
+    .tree-left {
+      left: 5%;
+    }
+
+    .tree-right {
+      right: 5%;
+    }
+
+    .tree-trunk {
+      position: absolute;
+      bottom: 0;
+      width: 20px;
+      height: 80px;
+      background: #8B4513;
+      left: 50%;
+      transform: translateX(-50%);
+    }
+
+    .tree-top {
+      position: absolute;
+      bottom: 70px;
+      width: 120px;
+      height: 130px;
+      background: #2ecc71;
+      border-radius: 50% 50% 40% 40%;
+      left: 50%;
+      transform: translateX(-50%);
+      box-shadow: inset 0 -10px 20px rgba(0,0,0,0.1);
+    }
+
+    .floating-leaf {
+      position: absolute;
+      width: 25px;
+      height: 25px;
+      background: var(--primary);
+      border-radius: 50% 0 50% 50%;
+      animation: floatLeaf 8s infinite linear;
+      opacity: 0.7;
+    }
+
+    .leaf-1 {
+      top: 15%;
+      left: 20%;
+      animation-delay: 0s;
+    }
+
+    .leaf-2 {
+      top: 25%;
+      right: 25%;
+      animation-delay: 2s;
+    }
+
+    .leaf-3 {
+      top: 40%;
+      left: 15%;
+      animation-delay: 4s;
+    }
+
+    .leaf-4 {
+      top: 60%;
+      right: 20%;
+      animation-delay: 6s;
+    }
+
+    .eco-badge {
+      position: absolute;
+      top: 10%;
+      left: 50%;
+      transform: translateX(-50%);
+      background: rgba(255, 255, 255, 0.2);
+      backdrop-filter: blur(10px);
+      padding: 15px 25px;
+      border-radius: 50px;
+      color: white;
+      font-weight: 600;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      animation: pulse 3s infinite;
+    }
+
+    .earth-icon {
+      position: absolute;
+      bottom: 10%;
+      right: 8%;
+      width: 80px;
+      height: 80px;
+      background: linear-gradient(135deg, #3498db, #2ecc71);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      font-size: 30px;
+      animation: rotate 20s infinite linear;
+      box-shadow: 0 0 30px rgba(46, 204, 113, 0.5);
+    }
+
+    .stats-bubble {
+      position: absolute;
+      background: rgba(255, 255, 255, 0.15);
+      backdrop-filter: blur(5px);
+      padding: 15px;
+      border-radius: 15px;
+      color: white;
+      font-size: 14px;
+      text-align: center;
+      animation: floatUp 6s infinite ease-in-out;
+    }
+
+    .stats-1 {
+      top: 20%;
+      left: 8%;
+      animation-delay: 0s;
+    }
+
+    .stats-2 {
+      top: 70%;
+      left: 12%;
+      animation-delay: 2s;
+    }
+
+    .stats-3 {
+      top: 30%;
+      right: 10%;
+      animation-delay: 4s;
+    }
+
+    .login-container {
+      display: flex;
+      width: 900px;
+      height: 550px;
+      background: rgba(255, 255, 255, 0.95);
+      backdrop-filter: blur(10px);
+      border-radius: 24px;
+      box-shadow: var(--shadow);
+      overflow: hidden;
+      position: relative;
+      z-index: 2;
+      animation: slideUp 1s ease;
+      border: 1px solid rgba(255, 255, 255, 0.2);
+    }
+
+    .login-visual {
+      flex: 1;
+      background: linear-gradient(135deg, var(--primary), var(--secondary));
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      padding: 40px;
+      color: white;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .login-visual::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" preserveAspectRatio="none"><path d="M0,0 L100,0 L100,100 Z" fill="rgba(255,255,255,0.1)"/></svg>');
+      background-size: cover;
+    }
+
+    .visual-icon {
+      font-size: 80px;
+      margin-bottom: 20px;
+      animation: pulse 2s infinite;
+    }
+
+    .visual-title {
+      font-size: 28px;
+      font-weight: 700;
+      margin-bottom: 15px;
+      text-align: center;
+    }
+
+    .visual-text {
+      font-size: 16px;
+      text-align: center;
+      max-width: 80%;
+      line-height: 1.6;
+      opacity: 0.9;
+    }
+
+    .feature-list {
+      margin-top: 30px;
+      list-style: none;
+      padding: 0;
+    }
+
+    .feature-list li {
+      margin-bottom: 12px;
+      display: flex;
+      align-items: center;
+    }
+
+    .feature-list i {
+      margin-right: 10px;
+      font-size: 18px;
+    }
+
+    .login-form {
+      flex: 1;
+      padding: 50px 40px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+
+    .form-header {
+      text-align: center;
+      margin-bottom: 30px;
+    }
+
+    .form-icon {
+      font-size: 40px;
+      color: var(--primary);
+      margin-bottom: 15px;
+    }
+
+    h2 {
+      font-weight: 700;
+      color: var(--dark);
+      margin-bottom: 10px;
+    }
+
+    .form-subtitle {
+      color: #666;
+      font-size: 14px;
+    }
+
+    .form-group {
+      position: relative;
+      margin-bottom: 25px;
+    }
+
+    .form-control {
+      border-radius: 50px;
+      padding: 14px 20px 14px 45px;
+      border: 2px solid #e0e0e0;
+      font-size: 15px;
+      transition: var(--transition);
+    }
+
+    .form-control:focus {
+      border-color: var(--primary);
+      box-shadow: 0 0 0 0.2rem rgba(46, 204, 113, 0.25);
+    }
+
+    .input-icon {
+      position: absolute;
+      left: 18px;
+      top: 50%;
+      transform: translateY(-50%);
+      color: #95a5a6;
+      font-size: 18px;
+    }
+
+    .btn-login {
+      background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+      border: none;
+      border-radius: 50px;
+      padding: 14px;
+      font-size: 16px;
+      font-weight: 600;
+      color: white;
+      transition: var(--transition);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .btn-login::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+      transition: left 0.7s;
+    }
+
+    .btn-login:hover::before {
+      left: 100%;
+    }
+
+    .btn-login:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 7px 15px rgba(46, 204, 113, 0.4);
+    }
+
+    .form-footer {
+      text-align: center;
+      margin-top: 25px;
+    }
+
+    .form-footer a {
+      text-decoration: none;
+      color: var(--primary);
+      font-weight: 600;
+      transition: var(--transition);
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+    }
+
+    .form-footer a:hover {
+      color: var(--primary-dark);
+      transform: translateX(5px);
+    }
+
+    .divider {
+      display: flex;
+      align-items: center;
+      margin: 20px 0;
+    }
+
+    .divider::before,
+    .divider::after {
+      content: '';
+      flex: 1;
+      border-bottom: 1px solid #e0e0e0;
+    }
+
+    .divider span {
+      padding: 0 15px;
+      color: #95a5a6;
+      font-size: 14px;
+    }
+
+    .social-login {
+      display: flex;
+      justify-content: center;
+      gap: 15px;
+      margin-top: 20px;
+    }
+
+    .social-btn {
+      width: 45px;
+      height: 45px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: #f5f5f5;
+      color: #555;
+      transition: var(--transition);
+      border: 1px solid #e0e0e0;
+    }
+
+    .social-btn:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
+    }
+
+    .social-btn.google:hover {
+      background: #db4437;
+      color: white;
+    }
+
+    .social-btn.facebook:hover {
+      background: #4267B2;
+      color: white;
+    }
+
+    .social-btn.twitter:hover {
+      background: #1DA1F2;
+      color: white;
+    }
+
+    /* Animations */
+    @keyframes fadeIn {
+      from { opacity: 0; } to { opacity: 1; }
+    }
+
+    @keyframes slideUp {
+      from { transform: translateY(40px); opacity: 0; }
+      to { transform: translateY(0); opacity: 1; }
+    }
+
+    @keyframes gradientShift {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
+
+    @keyframes floatLeaf {
+      0% { transform: translateY(0) rotate(0deg); }
+      50% { transform: translateY(-20px) rotate(180deg); }
+      100% { transform: translateY(0) rotate(360deg); }
+    }
+
+    @keyframes floatUp {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-10px); }
+    }
+
+    @keyframes pulse {
+      0% { transform: translateX(-50%) scale(1); }
+      50% { transform: translateX(-50%) scale(1.05); }
+      100% { transform: translateX(-50%) scale(1); }
+    }
+
+    @keyframes rotate {
+      from { transform: rotate(0deg); }
+      to { transform: rotate(360deg); }
+    }
+
+    /* Flash messages styling */
+    .alert {
+      border-radius: 12px;
+      border: none;
+      padding: 12px 15px;
+      margin-bottom: 20px;
+      animation: slideIn 0.5s ease;
+    }
+
+    @keyframes slideIn {
+      from { transform: translateX(-20px); opacity: 0; }
+      to { transform: translateX(0); opacity: 1; }
+    }
+
+    /* Responsive adjustments */
+    @media (max-width: 992px) {
+      .login-container {
+        flex-direction: column;
+        width: 90%;
+        height: auto;
+        max-width: 500px;
+      }
+      
+      .login-visual {
+        padding: 30px;
+      }
+      
+      .visual-icon {
+        font-size: 60px;
+      }
+      
+      .visual-title {
+        font-size: 24px;
+      }
+      
+      .tree, .stats-bubble, .earth-icon {
+        display: none;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <!-- Nature Background Elements -->
+  <div class="nature-background">
+    <!-- Trees -->
+    <div class="tree tree-left">
+      <div class="tree-trunk"></div>
+      <div class="tree-top"></div>
+    </div>
+    <div class="tree tree-right">
+      <div class="tree-trunk"></div>
+      <div class="tree-top"></div>
+    </div>
+    
+    <!-- Floating Leaves -->
+    <div class="floating-leaf leaf-1"></div>
+    <div class="floating-leaf leaf-2"></div>
+    <div class="floating-leaf leaf-3"></div>
+    <div class="floating-leaf leaf-4"></div>
+    
+    <!-- Eco Badge -->
+    <div class="eco-badge">
+      <i class="fas fa-leaf"></i>
+      Join 50,000+ Eco Warriors
+    </div>
+    
+    <!-- Stats Bubbles -->
+    <div class="stats-bubble stats-1">
+      <i class="fas fa-chart-line"></i><br>
+      15% Avg.<br>Reduction
+    </div>
+    <div class="stats-bubble stats-2">
+      <i class="fas fa-tree"></i><br>
+      2M+ Trees<br>Saved
+    </div>
+    <div class="stats-bubble stats-3">
+      <i class="fas fa-trophy"></i><br>
+      500K+<br>Achievements
+    </div>
+    
+    <!-- Rotating Earth -->
+    <div class="earth-icon">
+      <i class="fas fa-globe-americas"></i>
+    </div>
+  </div>
+
+  <div class="login-container">
+    <!-- Visual Section -->
+    <div class="login-visual">
+      <div class="visual-icon">🌱</div>
+      <h2 class="visual-title">Welcome Back Eco-Warrior!</h2>
+      <p class="visual-text">Continue your journey to reduce carbon footprint and make our planet greener.</p>
+      
+      <ul class="feature-list">
+        <li><i class="fas fa-check-circle"></i> Track your carbon emissions</li>
+        <li><i class="fas fa-check-circle"></i> Get personalized eco-tips</li>
+        <li><i class="fas fa-check-circle"></i> Join sustainability challenges</li>
+        <li><i class="fas fa-check-circle"></i> Monitor your progress</li>
+      </ul>
+    </div>
+
+    <!-- Login Form Section -->
+    <div class="login-form">
+      <div class="form-header">
+        <div class="form-icon"><i class="fas fa-key"></i></div>
+        <h2>Login to Your Account</h2>
+        <p class="form-subtitle">Enter your credentials to access your dashboard</p>
+      </div>
+
+      <!-- Flash messages -->
+      {% with messages = get_flashed_messages(with_categories=true) %}
+      {% if messages %}
+        {% for category, msg in messages %}
+          <div class="alert alert-{{ category }}">{{ msg }}</div>
+        {% endfor %}
+      {% endif %}
+      {% endwith %}
+
+      <form method="POST">
+        <div class="form-group">
+          <i class="fas fa-envelope input-icon"></i>
+          <input type="email" name="email" class="form-control" placeholder="Email address" required>
+        </div>
+        
+        <div class="form-group">
+          <i class="fas fa-lock input-icon"></i>
+          <input type="password" name="password" class="form-control" placeholder="Password" required>
+        </div>
+
+        <button type="submit" class="btn btn-login w-100">
+          <i class="fas fa-sign-in-alt me-2"></i> Login to Dashboard
+        </button>
+      </form>
+
+      <div class="divider">
+        <span>Or continue with</span>
+      </div>
+
+      <div class="social-login">
+  <!-- Google -->
+  <a href="https://accounts.google.com/" target="_blank" class="social-btn google">
+    <i class="fab fa-google"></i>
+  </a>
+
+  <!-- Facebook -->
+  <a href="https://www.facebook.com/login/" target="_blank" class="social-btn facebook">
+    <i class="fab fa-facebook-f"></i>
+  </a>
+
+  <!-- Twitter -->
+  <a href="https://twitter.com/login" target="_blank" class="social-btn twitter">
+    <i class="fab fa-twitter"></i>
+  </a>
+</div>
+
+
+      <div class="form-footer">
+        <p>Don't have an account?
+          <a href="{{ url_for('register') }}">
+            Create Account <i class="fas fa-arrow-right"></i>
+          </a>
+        </p>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // Add interactive elements
+    document.addEventListener('DOMContentLoaded', function() {
+      const inputs = document.querySelectorAll('.form-control');
+      
+      inputs.forEach(input => {
+        // Add focus effect
+        input.addEventListener('focus', function() {
+          this.parentElement.querySelector('.input-icon').style.color = 'var(--primary)';
+        });
+        
+        input.addEventListener('blur', function() {
+          if (!this.value) {
+            this.parentElement.querySelector('.input-icon').style.color = '#95a5a6';
+          }
+        });
+        
+        // Add input validation styling
+        input.addEventListener('input', function() {
+          if (this.checkValidity()) {
+            this.style.borderColor = 'var(--primary)';
+          } else {
+            this.style.borderColor = '#e0e0e0';
+          }
+        });
+      });
+      
+      // Add button animation on hover
+      const loginBtn = document.querySelector('.btn-login');
+      loginBtn.addEventListener('mouseenter', function() {
+        this.style.transform = 'translateY(-3px)';
+      });
+      
+      loginBtn.addEventListener('mouseleave', function() {
+        this.style.transform = 'translateY(0)';
+      });
+      
+      // Add floating leaves animation
+      const leaves = document.querySelectorAll('.floating-leaf');
+      leaves.forEach((leaf, index) => {
+        leaf.style.animationDelay = `${index * 2}s`;
+      });
+    });
+  </script>
+</body>
+</html>

@@ -1,0 +1,1203 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Welcome | Carbon Tracker</title>
+  <link
+  rel="stylesheet"
+  href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"
+/>
+
+  
+  <!-- Bootstrap -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+  <!-- Google Font -->
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <!-- Animate.css for animations -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
+
+  <style>
+    :root {
+      --primary: #2ecc71;
+      --primary-dark: #27ae60;
+      --primary-light: #a9dfbf;
+      --secondary: #3498db;
+      --dark: #2c3e50;
+      --light: #ecf0f1;
+      --white: #ffffff;
+      --shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+      --transition: all 0.3s ease;
+    }
+
+    body {
+      margin: 0;
+      font-family: 'Poppins', sans-serif;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      background: linear-gradient(135deg, #2ecc71, #27ae60, #3498db);
+      background-size: 400% 400%;
+      animation: gradientShift 15s ease infinite;
+      position: relative;
+      overflow-x: hidden;
+    }
+
+    /* Animated background elements */
+    .bg-shapes {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      overflow: hidden;
+      z-index: 0;
+    }
+
+    .shape {
+      position: absolute;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.1);
+      animation: float 15s infinite linear;
+    }
+
+    .shape:nth-child(1) {
+      width: 80px;
+      height: 80px;
+      top: 20%;
+      left: 10%;
+      animation-delay: 0s;
+    }
+
+    .shape:nth-child(2) {
+      width: 120px;
+      height: 120px;
+      top: 60%;
+      left: 80%;
+      animation-delay: 2s;
+    }
+
+    .shape:nth-child(3) {
+      width: 60px;
+      height: 60px;
+      top: 80%;
+      left: 20%;
+      animation-delay: 4s;
+    }
+
+    .shape:nth-child(4) {
+      width: 100px;
+      height: 100px;
+      top: 30%;
+      left: 70%;
+      animation-delay: 6s;
+    }
+
+    .main-container {
+      display: flex;
+      flex: 1;
+      width: 100%;
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 40px 20px;
+      position: relative;
+      z-index: 1;
+    }
+
+    .content-section {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      padding-right: 40px;
+    }
+
+    .auth-section {
+      width: 400px;
+      background: rgba(255, 255, 255, 0.95);
+      backdrop-filter: blur(10px);
+      padding: 40px 30px;
+      border-radius: 24px;
+      box-shadow: var(--shadow);
+      animation: slideUp 0.9s ease;
+      transition: var(--transition);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      position: relative;
+    }
+
+    .auth-section::before {
+      content: '';
+      position: absolute;
+      top: -10px;
+      left: -10px;
+      right: -10px;
+      bottom: -10px;
+      background: linear-gradient(135deg, rgba(46, 204, 113, 0.2), rgba(52, 152, 219, 0.2));
+      border-radius: 30px;
+      z-index: -1;
+      opacity: 0;
+      transition: var(--transition);
+    }
+
+    .auth-section:hover::before {
+      opacity: 1;
+    }
+
+    .auth-section:hover {
+      transform: translateY(-5px) scale(1.02);
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
+    }
+
+    .logo {
+      font-size: 48px;
+      margin-bottom: 15px;
+      display: inline-block;
+      animation: pulse 2s infinite;
+    }
+
+    h1 {
+      font-size: 42px;
+      font-weight: 700;
+      color: white;
+      margin-bottom: 20px;
+      line-height: 1.2;
+    }
+
+    .tagline {
+      color: rgba(255, 255, 255, 0.9);
+      margin-bottom: 30px;
+      font-size: 18px;
+      line-height: 1.6;
+      max-width: 90%;
+    }
+
+    .features {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 20px;
+      margin-top: 30px;
+    }
+
+    .feature {
+      display: flex;
+      align-items: center;
+      background: rgba(255, 255, 255, 0.15);
+      backdrop-filter: blur(5px);
+      padding: 15px;
+      border-radius: 12px;
+      width: 45%;
+      transition: var(--transition);
+    }
+
+    .feature:hover {
+      transform: translateY(-5px);
+      background: rgba(255, 255, 255, 0.25);
+    }
+
+    .feature-icon {
+      font-size: 24px;
+      margin-right: 12px;
+      color: white;
+    }
+
+    .feature-text {
+      font-size: 14px;
+      color: white;
+      font-weight: 500;
+    }
+
+    .btn-container {
+      display: flex;
+      flex-direction: column;
+      gap: 15px;
+      margin-top: 25px;
+    }
+
+    .btn-custom {
+      padding: 14px 25px;
+      border-radius: 50px;
+      font-size: 16px;
+      font-weight: 600;
+      transition: var(--transition);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      border: none;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .btn-custom::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+      transition: left 0.7s;
+    }
+
+    .btn-custom:hover::before {
+      left: 100%;
+    }
+
+    .btn-login {
+      background: linear-gradient(135deg, var(--secondary), #2980b9);
+      color: white;
+    }
+
+    .btn-login:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 7px 15px rgba(52, 152, 219, 0.4);
+    }
+
+    .btn-register {
+      background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+      color: white;
+    }
+
+    .btn-register:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 7px 15px rgba(46, 204, 113, 0.4);
+    }
+
+    .auth-title {
+      font-size: 24px;
+      font-weight: 600;
+      color: var(--dark);
+      margin-bottom: 25px;
+      text-align: center;
+    }
+
+    .visual-elements {
+      display: flex;
+      justify-content: space-between;
+      margin-top: 40px;
+      gap: 20px;
+    }
+
+    .visual-element {
+      width: 30%;
+      height: 180px;
+      border-radius: 16px;
+      overflow: hidden;
+      position: relative;
+      box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+      transition: var(--transition);
+      background: linear-gradient(135deg, rgba(255,255,255,0.1), rgba(255,255,255,0.05));
+      backdrop-filter: blur(10px);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+    }
+
+    .visual-element:hover {
+      transform: translateY(-8px) scale(1.05);
+      box-shadow: 0 15px 35px rgba(0, 0, 0, 0.25);
+    }
+
+    .visual-image {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      opacity: 0.8;
+      transition: var(--transition);
+    }
+
+    .visual-element:hover .visual-image {
+      opacity: 1;
+      transform: scale(1.1);
+    }
+
+    .visual-overlay {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      background: linear-gradient(transparent, rgba(0,0,0,0.7));
+      padding: 20px 15px 15px;
+      color: white;
+    }
+
+    .visual-text {
+      font-size: 14px;
+      font-weight: 600;
+      margin: 0;
+      text-shadow: 0 2px 4px rgba(0,0,0,0.5);
+    }
+
+    .visual-icon {
+      position: absolute;
+      top: 15px;
+      right: 15px;
+      background: rgba(255, 255, 255, 0.2);
+      backdrop-filter: blur(10px);
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 18px;
+      color: white;
+    }
+
+    /* Stats Section */
+    .stats-section {
+      display: flex;
+      justify-content: space-between;
+      margin: 40px 0;
+      padding: 25px;
+      background: rgba(255, 255, 255, 0.1);
+      backdrop-filter: blur(10px);
+      border-radius: 16px;
+      border: 1px solid rgba(255, 255, 255, 0.2);
+    }
+
+    .stat-item {
+      text-align: center;
+      flex: 1;
+    }
+
+    .stat-number {
+      font-size: 2.5rem;
+      font-weight: 700;
+      color: white;
+      margin-bottom: 5px;
+      text-shadow: 0 2px 4px rgba(0,0,0,0.3);
+    }
+
+    .stat-label {
+      font-size: 14px;
+      color: rgba(255, 255, 255, 0.9);
+      font-weight: 500;
+    }
+
+    /* Auth Section Enhancements */
+    .auth-benefits {
+      margin-top: 25px;
+      padding-top: 20px;
+      border-top: 1px solid rgba(0,0,0,0.1);
+    }
+
+    .benefit-item {
+      display: flex;
+      align-items: center;
+      margin-bottom: 12px;
+      color: #666;
+      font-size: 14px;
+    }
+
+    .benefit-item i {
+      color: var(--primary);
+      margin-right: 10px;
+      font-size: 16px;
+    }
+
+    .community-count {
+      background: linear-gradient(135deg, var(--primary), var(--secondary));
+      color: white;
+      padding: 12px 20px;
+      border-radius: 50px;
+      text-align: center;
+      margin-top: 20px;
+      font-weight: 600;
+      font-size: 14px;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+      animation: pulse 2s infinite;
+    }
+
+    /* Auth Top Interactive Section */
+    .auth-top-interactive {
+      background: linear-gradient(135deg, rgba(46, 204, 113, 0.1), rgba(52, 152, 219, 0.1));
+      border-radius: 16px;
+      padding: 20px;
+      margin-bottom: 25px;
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      backdrop-filter: blur(10px);
+    }
+
+    .eco-counter {
+      display: flex;
+      align-items: center;
+      gap: 15px;
+      margin-bottom: 15px;
+    }
+
+    .counter-icon {
+      width: 50px;
+      height: 50px;
+      background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      font-size: 1.5rem;
+    }
+
+    .counter-content {
+      flex: 1;
+    }
+
+    .counter-number {
+      font-size: 2rem;
+      font-weight: 700;
+      color: var(--dark);
+      line-height: 1;
+    }
+
+    .counter-label {
+      font-size: 0.85rem;
+      color: #666;
+      font-weight: 500;
+    }
+
+    .impact-stats {
+      display: flex;
+      gap: 15px;
+    }
+
+    .impact-item {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 8px 12px;
+      background: rgba(255, 255, 255, 0.8);
+      border-radius: 8px;
+      font-size: 0.8rem;
+      font-weight: 600;
+      color: var(--dark);
+      flex: 1;
+      justify-content: center;
+      transition: var(--transition);
+    }
+
+    .impact-item i {
+      color: var(--primary);
+    }
+
+    /* Auth Bottom Interactive Section */
+    .auth-bottom-interactive {
+      background: rgba(255, 255, 255, 0.05);
+      border-radius: 16px;
+      padding: 20px;
+      margin-top: 20px;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    .testimonial-slider {
+      position: relative;
+      height: 80px;
+      overflow: hidden;
+    }
+
+    .testimonial {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      opacity: 0;
+      transform: translateY(20px);
+      transition: all 0.5s ease;
+    }
+
+    .testimonial.active {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .testimonial-content {
+      font-style: italic;
+      color: var(--dark);
+      margin-bottom: 8px;
+      line-height: 1.4;
+      font-size: 0.9rem;
+    }
+
+    .testimonial-author {
+      font-size: 0.8rem;
+      color: #666;
+      font-weight: 600;
+      text-align: right;
+    }
+
+    .slider-indicators {
+      display: flex;
+      justify-content: center;
+      gap: 8px;
+      margin-top: 15px;
+    }
+
+    .indicator {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: #ddd;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+
+    .indicator.active {
+      background: var(--primary);
+      transform: scale(1.2);
+    }
+
+    /* Hover effects for interactive elements */
+    .eco-counter:hover .counter-icon {
+      animation: bounce 0.6s ease;
+    }
+
+    .impact-item:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    }
+
+    @keyframes bounce {
+      0%, 20%, 60%, 100% {
+        transform: translateY(0);
+      }
+      40% {
+        transform: translateY(-5px);
+      }
+      80% {
+        transform: translateY(-2px);
+      }
+    }
+
+    /* Footer Styles */
+    footer {
+      background: rgba(44, 62, 80, 0.9);
+      color: white;
+      padding: 40px 0 20px;
+      margin-top: auto;
+    }
+
+    .footer-content {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 20px;
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+    }
+
+    .footer-section {
+      flex: 1;
+      min-width: 250px;
+      margin-bottom: 30px;
+      padding-right: 20px;
+    }
+
+    .footer-section h3 {
+      font-size: 18px;
+      margin-bottom: 20px;
+      position: relative;
+      padding-bottom: 10px;
+    }
+
+    .footer-section h3::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 40px;
+      height: 2px;
+      background: var(--primary);
+    }
+
+    .footer-links {
+      list-style: none;
+      padding: 0;
+    }
+
+    .footer-links li {
+      margin-bottom: 10px;
+    }
+
+    .footer-links a {
+      color: #ddd;
+      text-decoration: none;
+      transition: var(--transition);
+    }
+
+    .footer-links a:hover {
+      color: var(--primary);
+      padding-left: 5px;
+    }
+
+    .contact-info {
+      list-style: none;
+      padding: 0;
+    }
+
+    .contact-info li {
+      margin-bottom: 15px;
+      display: flex;
+      align-items: flex-start;
+    }
+
+    .contact-info i {
+      margin-right: 10px;
+      color: var(--primary);
+    }
+
+    .social-links {
+      display: flex;
+      gap: 15px;
+      margin-top: 20px;
+    }
+
+    .social-links a {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 36px;
+      height: 36px;
+      background: rgba(255, 255, 255, 0.1);
+      border-radius: 50%;
+      color: white;
+      transition: var(--transition);
+    }
+
+    .social-links a:hover {
+      background: var(--primary);
+      transform: translateY(-3px);
+    }
+
+    .footer-bottom {
+      text-align: center;
+      padding-top: 20px;
+      margin-top: 30px;
+      border-top: 1px solid rgba(255, 255, 255, 0.1);
+      font-size: 14px;
+      color: #aaa;
+    }
+
+    /* Animations */
+    @keyframes fadeIn {
+      from { opacity: 0; } to { opacity: 1; }
+    }
+
+    @keyframes slideUp {
+      from { transform: translateY(40px); opacity: 0; }
+      to { transform: translateY(0); opacity: 1; }
+    }
+
+    @keyframes gradientShift {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
+
+    @keyframes float {
+      0% { transform: translateY(0) rotate(0deg); }
+      50% { transform: translateY(-20px) rotate(180deg); }
+      100% { transform: translateY(0) rotate(360deg); }
+    }
+
+    @keyframes pulse {
+      0% { transform: scale(1); }
+      50% { transform: scale(1.1); }
+      100% { transform: scale(1); }
+    }
+
+    /* Ripple effect styles */
+    .btn-custom {
+      position: relative;
+      overflow: hidden;
+    }
+    
+    .ripple {
+      position: absolute;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.6);
+      transform: scale(0);
+      animation: ripple-animation 0.6s linear;
+    }
+    
+    @keyframes ripple-animation {
+      to {
+        transform: scale(4);
+        opacity: 0;
+      }
+    }
+
+    /* Responsive adjustments */
+    @media (max-width: 992px) {
+      .main-container {
+        flex-direction: column;
+        align-items: center;
+      }
+      
+      .content-section {
+        padding-right: 0;
+        margin-bottom: 40px;
+        text-align: center;
+      }
+      
+      .auth-section {
+        width: 90%;
+        max-width: 400px;
+      }
+      
+      .feature {
+        width: 100%;
+      }
+      
+      .visual-elements {
+        justify-content: center;
+        gap: 20px;
+      }
+      
+      .visual-element {
+        width: 45%;
+        max-width: 200px;
+      }
+
+      .stats-section {
+        flex-wrap: wrap;
+        gap: 20px;
+      }
+
+      .stat-item {
+        flex: 0 0 calc(50% - 20px);
+      }
+
+      .auth-top-interactive {
+        padding: 15px;
+      }
+      
+      .eco-counter {
+        flex-direction: column;
+        text-align: center;
+        gap: 10px;
+      }
+      
+      .impact-stats {
+        flex-direction: column;
+        gap: 10px;
+      }
+      
+      .testimonial-slider {
+        height: 100px;
+      }
+    }
+
+    @media (max-width: 576px) {
+      .visual-element {
+        width: 100%;
+        max-width: 300px;
+      }
+      
+      .footer-section {
+        min-width: 100%;
+      }
+
+      .stat-item {
+        flex: 0 0 100%;
+      }
+
+      h1 {
+        font-size: 32px;
+      }
+    }
+    footer {
+  position: relative;
+  z-index: 1000; /* ensures it's above charts or containers */
+}
+
+footer a {
+  color: #aaa;
+  text-decoration: none;
+  transition: color 0.3s ease;
+  cursor: pointer;
+  pointer-events: auto; /* ensure clicks are registered */
+}
+
+footer a:hover {
+  color: #fff;
+  text-decoration: underline;
+}
+.social-links {
+  margin-top: 15px;
+  display: flex;
+  gap: 12px;
+}
+
+.social-links a {
+  color: #fff;
+  font-size: 20px;
+  background: rgba(255, 255, 255, 0.15);
+  width: 38px;
+  height: 38px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  transition: 0.3s ease;
+  text-decoration: none;
+}
+
+.social-links a:hover {
+  background: #00c6ff;
+  color: #fff;
+  transform: translateY(-3px);
+}
+
+  </style>
+</head>
+
+<body>
+  <!-- Animated background shapes -->
+  <div class="bg-shapes">
+    <div class="shape"></div>
+    <div class="shape"></div>
+    <div class="shape"></div>
+    <div class="shape"></div>
+  </div>
+
+  <div class="main-container">
+    <div class="content-section">
+      <div class="logo">🌱</div>
+      <h1>Track Your Carbon Footprint, Save Our Planet</h1>
+      <p class="tagline">Our AI-powered Carbon Tracker helps you monitor, analyze, and reduce your environmental impact. Join thousands of eco-conscious users making a difference today.</p>
+      
+      <div class="features">
+        <div class="feature">
+          <div class="feature-icon"><i class="fas fa-chart-line"></i></div>
+          <div class="feature-text">AI-Powered Analytics</div>
+        </div>
+        <div class="feature">
+          <div class="feature-icon"><i class="fas fa-leaf"></i></div>
+          <div class="feature-text">Personalized Eco Tips</div>
+        </div>
+        <div class="feature">
+          <div class="feature-icon"><i class="fas fa-trophy"></i></div>
+          <div class="feature-text">Eco Achievement Badges</div>
+        </div>
+        <div class="feature">
+          <div class="feature-icon"><i class="fas fa-users"></i></div>
+          <div class="feature-text">Community Challenges</div>
+        </div>
+      </div>
+
+      <!-- Stats Section -->
+      <div class="stats-section animate__animated animate__fadeInUp">
+        <div class="stat-item">
+          <div class="stat-number">4+</div>
+          <div class="stat-label">Active Users</div>
+        </div>
+        <div class="stat-item">
+          <div class="stat-number">1M+</div>
+          <div class="stat-label">CO₂ Reduced</div>
+        </div>
+        <div class="stat-item">
+          <div class="stat-number">1%</div>
+          <div class="stat-label">Avg. Reduction</div>
+        </div>
+      </div>
+      
+      <!-- Visual Elements with Images -->
+      <div class="visual-elements">
+        <div class="visual-element">
+          <div class="visual-icon">
+            <i class="fas fa-chart-bar"></i>
+          </div>
+          <img src="https://images.unsplash.com/photo-1551288049-bebda4e38f71?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=500&q=80" alt="Carbon Analytics" class="visual-image">
+          <div class="visual-overlay">
+            <p class="visual-text">Carbon Analytics</p>
+          </div>
+        </div>
+        
+        <div class="visual-element">
+          <div class="visual-icon">
+            <i class="fas fa-lightbulb"></i>
+          </div>
+          <img src="https://images.unsplash.com/photo-1542601906990-b4d3fb778b09?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=500&q=80" alt="Eco Tips" class="visual-image">
+          <div class="visual-overlay">
+            <p class="visual-text">Eco Tips</p>
+          </div>
+        </div>
+        
+        <div class="visual-element">
+          <div class="visual-icon">
+            <i class="fas fa-tasks"></i>
+          </div>
+          <img src="https://images.unsplash.com/photo-1460925895917-afdab827c52f?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=500&q=80" alt="Progress Tracking" class="visual-image">
+          <div class="visual-overlay">
+            <p class="visual-text">Progress Tracking</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Auth Section -->
+    <div class="auth-section animate__animated animate__fadeInRight">
+      <!-- Top Interactive Section -->
+      <div class="auth-top-interactive">
+        <div class="eco-counter">
+          <div class="counter-icon">
+            <i class="fas fa-leaf"></i>
+          </div>
+          <div class="counter-content">
+            <div class="counter-number" id="liveCounter">4</div>
+            <div class="counter-label">People joined today</div>
+          </div>
+        </div>
+        <div class="impact-stats">
+          <div class="impact-item">
+            <i class="fas fa-tree"></i>
+            <span>+12 trees saved</span>
+          </div>
+          <div class="impact-item">
+            <i class="fas fa-cloud"></i>
+            <span>-2.4t CO₂</span>
+          </div>
+        </div>
+      </div>
+
+      <h2 class="auth-title">Start Your Eco Journey</h2>
+      <div class="btn-container">
+        <a class="btn btn-login btn-custom" href="{{ url_for('login') }}">
+          <i class="fas fa-key"></i> Login to Your Account
+        </a>
+        <a class="btn btn-register btn-custom" href="{{ url_for('register') }}">
+          <i class="fas fa-user-plus"></i> Create New Account
+        </a>
+      </div>
+      
+      <!-- Auth Benefits -->
+      <div class="auth-benefits">
+        <div class="benefit-item">
+          <i class="fas fa-check-circle"></i>
+          <span>Track your carbon footprint in real-time</span>
+        </div>
+        <div class="benefit-item">
+          <i class="fas fa-check-circle"></i>
+          <span>Get personalized sustainability tips</span>
+        </div>
+        <div class="benefit-item">
+          <i class="fas fa-check-circle"></i>
+          <span>Join eco-challenges and earn badges</span>
+        </div>
+        <div class="benefit-item">
+          <i class="fas fa-check-circle"></i>
+          <span>Compare your progress with friends</span>
+        </div>
+      </div>
+      
+      <!-- Bottom Interactive Section -->
+      <div class="auth-bottom-interactive">
+        <div class="testimonial-slider">
+          <div class="testimonial active">
+            <div class="testimonial-content">
+              "Reduced my carbon footprint by 30% in just 2 months!"
+            </div>
+            <div class="testimonial-author">
+              - Sarah K., Eco Warrior
+            </div>
+          </div>
+          <div class="testimonial">
+            <div class="testimonial-content">
+              "The AI tips helped me save $50 on energy bills monthly!"
+            </div>
+            <div class="testimonial-author">
+              - Mike T., Green Enthusiast
+            </div>
+          </div>
+          <div class="testimonial">
+            <div class="testimonial-content">
+              "Love the community challenges! Made sustainability fun."
+            </div>
+            <div class="testimonial-author">
+              - Priya L., Climate Advocate
+            </div>
+          </div>
+        </div>
+        <div class="slider-indicators">
+          <span class="indicator active"></span>
+          <span class="indicator"></span>
+          <span class="indicator"></span>
+        </div>
+      </div>
+      
+      <div class="community-count">
+        <i class="fas fa-users me-2"></i>Join <span id="totalUsers">4</span>+ Eco Warriors Making a Difference
+      </div>
+    </div>
+  </div>
+
+  <!-- Footer -->
+ <footer>
+  <div class="footer-content">
+    <!-- About Section -->
+    <div class="footer-section">
+      <h3>About EcoTrack</h3>
+      <p>
+        EcoTrack is an AI-powered carbon footprint tracker helping individuals and businesses 
+        reduce their environmental impact through data-driven insights and actionable recommendations.
+      </p>
+      <div class="social-links">
+        <a href="https://www.facebook.com" target="_blank" rel="noopener noreferrer"><i class="fab fa-facebook-f"></i></a>
+        <a href="https://twitter.com" target="_blank" rel="noopener noreferrer"><i class="fab fa-twitter"></i></a>
+        <a href="https://www.instagram.com" target="_blank" rel="noopener noreferrer"><i class="fab fa-instagram"></i></a>
+        <a href="https://www.linkedin.com/company/carbon-tracker/" target="_blank" rel="noopener noreferrer"><i class="fab fa-linkedin-in"></i></a>
+      </div>
+    </div>
+
+    <!-- Quick Links Section -->
+    <div class="footer-section">
+      <h3>Quick Links</h3>
+      <ul class="footer-links">
+        <li><a href="{{ url_for('home') }}">Home</a></li>
+        <li><a href="https://www.epa.gov/ghgemissions/understanding-global-warming-potentials" target="_blank">How It Works</a></li>
+        <li><a href="https://www.un.org/en/actnow/ten-actions" target="_blank">Features</a></li>
+        <li><a href="https://climeworks.com/subscriptions" target="_blank">Pricing</a></li>
+        <li><a href="https://www.carbonbrief.org/" target="_blank">Blog</a></li>
+      </ul>
+    </div>
+
+    <!-- Contact Section -->
+    <div class="footer-section">
+      <h3>Contact Us</h3>
+      <ul class="contact-info">
+        <li><i class="fas fa-map-marker-alt"></i> <span>THE NATIONAL INSTITUTE OF ENGINEERING</span></li>
+        <li><i class="fas fa-phone"></i> <span>+91 98765 43210</span></li>
+        <li><i class="fas fa-envelope"></i> <span>info@ecotrack.com</span></li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="footer-bottom">
+    <p>
+      &copy; 2025 EcoTrack Carbon Tracker. All rights reserved. |
+      <a href="https://policies.google.com/privacy" 
+         target="_blank" 
+         rel="noopener noreferrer" 
+         style="color: #aaa;">
+        Privacy Policy
+      </a> |
+      <a href="https://www.termsfeed.com/blog/sample-terms-of-service-template/" 
+         target="_blank" 
+         rel="noopener noreferrer" 
+         style="color: #aaa;">
+        Terms of Service
+      </a>
+    </p>
+  </div>
+</footer>
+
+  <!-- Font Awesome for icons -->
+  <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
+  
+  <script>
+    // Interactive elements for auth section
+    document.addEventListener('DOMContentLoaded', function() {
+      // Live counter animation
+      const liveCounter = document.getElementById('liveCounter');
+      const totalUsers = document.getElementById('totalUsers');
+      let currentCount = 4;
+      
+      // Simulate live user joins
+      setInterval(() => {
+        currentCount++;
+        liveCounter.textContent = currentCount;
+        totalUsers.textContent = currentCount;
+        
+        // Add animation
+        liveCounter.style.transform = 'scale(1.2)';
+        setTimeout(() => {
+          liveCounter.style.transform = 'scale(1)';
+        }, 300);
+      }, 8000); // Every 8 seconds
+
+      // Testimonial slider
+      const testimonials = document.querySelectorAll('.testimonial');
+      const indicators = document.querySelectorAll('.indicator');
+      let currentTestimonial = 0;
+      
+      function showTestimonial(index) {
+        testimonials.forEach(testimonial => testimonial.classList.remove('active'));
+        indicators.forEach(indicator => indicator.classList.remove('active'));
+        
+        testimonials[index].classList.add('active');
+        indicators[index].classList.add('active');
+        currentTestimonial = index;
+      }
+      
+      // Auto-rotate testimonials
+      setInterval(() => {
+        let nextIndex = (currentTestimonial + 1) % testimonials.length;
+        showTestimonial(nextIndex);
+      }, 5000);
+      
+      // Click indicators to navigate
+      indicators.forEach((indicator, index) => {
+        indicator.addEventListener('click', () => {
+          showTestimonial(index);
+        });
+      });
+      
+      // Interactive hover effects
+      const impactItems = document.querySelectorAll('.impact-item');
+      impactItems.forEach(item => {
+        item.addEventListener('mouseenter', function() {
+          this.style.transform = 'translateY(-3px)';
+          this.style.boxShadow = '0 6px 20px rgba(0,0,0,0.15)';
+        });
+        
+        item.addEventListener('mouseleave', function() {
+          this.style.transform = 'translateY(0)';
+          this.style.boxShadow = 'none';
+        });
+      });
+      
+      // Add click animation to buttons
+      const authButtons = document.querySelectorAll('.btn-custom');
+      authButtons.forEach(button => {
+        button.addEventListener('click', function(e) {
+          // Add ripple effect
+          const ripple = document.createElement('span');
+          const rect = this.getBoundingClientRect();
+          const size = Math.max(rect.width, rect.height);
+          const x = e.clientX - rect.left - size / 2;
+          const y = e.clientY - rect.top - size / 2;
+          
+          ripple.style.width = ripple.style.height = size + 'px';
+          ripple.style.left = x + 'px';
+          ripple.style.top = y + 'px';
+          ripple.classList.add('ripple');
+          
+          this.appendChild(ripple);
+          
+          setTimeout(() => {
+            ripple.remove();
+          }, 600);
+        });
+      });
+
+      const buttons = document.querySelectorAll('.btn-custom');
+      
+      buttons.forEach(button => {
+        button.addEventListener('mouseenter', function() {
+          this.style.transform = 'translateY(-3px)';
+        });
+        
+        button.addEventListener('mouseleave', function() {
+          this.style.transform = 'translateY(0)';
+        });
+      });
+      
+      // Add a subtle pulsing effect to the logo
+      const logo = document.querySelector('.logo');
+      setInterval(() => {
+        logo.style.transform = 'scale(1.05)';
+        setTimeout(() => {
+          logo.style.transform = 'scale(1)';
+        }, 500);
+      }, 3000);
+      
+     
